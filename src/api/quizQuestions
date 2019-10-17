@@ -1,0 +1,7 @@
+var quizQuestions = ["What franchise would you rather play a game from?",
+    "Which console would you prefer to play with friends?",
+    "Which of these racing franchises would you prefer to play a game from?",
+    "Which of these games do you think is best?",
+    "What console would you prefer to own?"];
+
+export default quizQuestions;
