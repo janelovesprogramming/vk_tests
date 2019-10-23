@@ -55,7 +55,9 @@ class App extends React.Component {
 			agr: 0,
 			con: 0,
 			ner:0,
-			open: 0
+			open: 0,
+			fetchedUser: null,
+			authToken: null
 
 		}
 
@@ -230,8 +232,8 @@ class App extends React.Component {
 			connect.send("VKWebAppResizeWindow", {"width": 800, "height": 1000});
 		}
 
-		alert(connect.send("VKWebAppGetUserInfo", {}));
-
+		var o = connect.send('VKWebAppGetUserInfo', {});
+		alert(o);
 		const firebase = require("firebase");
 
 
