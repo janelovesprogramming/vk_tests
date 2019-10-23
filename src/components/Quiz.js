@@ -6,17 +6,16 @@ import AnswerOption from '../components/AnswerOption';
 import {PanelHeader} from "@vkontakte/vkui";
 import PanelHeaderBack from "@vkontakte/vkui/dist/components/PanelHeaderBack/PanelHeaderBack";
 import Tasks from "./Tasks";
+import AnswerTest from "./AnswersTest";
 
 function Quiz(props) {
-    function renderAnswerOptions(key) {
+    function renderAnswerTest(key) {
         return (
-            <AnswerOption
-                key={key.content}
-                answerContent={key.content}
-                answerType={key.type}
-                answer={props.answer}
-                questionId={props.questionId}
+            <AnswerTest
                 onAnswerSelected={props.onAnswerSelected}
+                answerVal={props.answerCount}
+                answer={props.answerOptions}
+                answerContent={props.contentAn}
             />
         );
     }
@@ -26,27 +25,23 @@ function Quiz(props) {
     return (
 
         <div key={props.questionId}>
-            <PanelHeader
-                left={
-                    <PanelHeaderBack
-                        onClick={()=>router.navigate('quiz')}
-                    />
-                }
-            >
+            <PanelHeader>
                 Тесты
             </PanelHeader>
 
             <QuestionCount counter={props.questionId} total={props.questionTotal} />
             <Question content={props.question} />
-            <ul className="answerOptions">
-                {props.answerOptions.map(renderAnswerOptions)}
+            <ul className="answerTest">
+                {props.answerOptions.map(renderAnswerTest)}
             </ul>
         </div>
     );
 }
 
 Quiz.propTypes = {
+    contentAn: PropTypes.array.isRequired,
     answer: PropTypes.string.isRequired,
+    answerCount: PropTypes.number.isRequired,
     answerOptions: PropTypes.array.isRequired,
     question: PropTypes.string.isRequired,
     questionId: PropTypes.number.isRequired,

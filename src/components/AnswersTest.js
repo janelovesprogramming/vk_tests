@@ -9,18 +9,22 @@ function AnswerTest(props) {
 
     return (
         <div>
-            <Radio name="radio" value="1"defaultChecked>First</Radio>
-            <Radio name="radio" value="2">Second</Radio>
-            <Radio name="radio" value="3" >Third (disabled)</Radio>
+            <li className="answerOption">
+                <input
+                    name="Radio"
+                    value={props.answerVal}
+                    onChange={props.onAnswerSelected}
+                    content={props.answerContent}
+                />
+            </li>
         </div>
-    );
-}
+        );
+    }
 
-AnswerTest.propTypes = {
-    answerType: PropTypes.string.isRequired,
-    answerContent: PropTypes.string.isRequired,
-    answer: PropTypes.string.isRequired,
-    onAnswerSelected: PropTypes.func.isRequired
-};
+    AnswerTest.propTypes = {
+        answerVal: PropTypes.number.isRequired,
+        answerContent: PropTypes.array.isRequired,
+        onAnswerSelected: PropTypes.func.isRequired
+    };
 
 export default AnswerTest;
