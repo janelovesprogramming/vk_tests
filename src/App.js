@@ -222,7 +222,6 @@ class App extends React.Component {
 
 
 		}
-		alert(this.state.ext)
 
 		connect.subscribe((e) => console.log(e));
 
