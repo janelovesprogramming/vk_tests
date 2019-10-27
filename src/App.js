@@ -22,7 +22,6 @@ import connect from '@vkontakte/vk-connect';
 import Quiz from './components/Quiz';
 import Result from './components/Result';
 import AnswerTest from "./components/AnswersTest";
-import fetchJsonp from 'fetch-jsonp';
 
 
 class App extends React.Component {
@@ -58,8 +57,7 @@ class App extends React.Component {
 			ner:0,
 			open: 0,
 			fetchedUser: null,
-			authToken : null,
-			items : []
+			authToken: null
 
 		}
 
@@ -180,32 +178,16 @@ class App extends React.Component {
 
 		}
 
-		connect.subscribe((e) => {
-			switch (e.detail.type) {
-				case 'VKWebAppGetUserInfoResult':
-					this.setState({ fetchedUser: e.detail.data });
-					break;
-				case 'VKWebAppAccessTokenReceived':
-					this.setState({ authToken : e.detail.data.access_token });
-					break;
-				default:
-					console.log(e.detail.type);
-			}
-		});
+		connect.subscribe((e) => console.log(e));
+
 		connect.send("VKWebAppInit", {});
 
 		if (connect.supports("VKWebAppResizeWindow")) {
 			connect.send("VKWebAppResizeWindow", {"width": 800, "height": 1000});
 		}
 
-		connect.send('VKWebAppGetUserInfo', {});
-
-
-
-
-
-		alert(console.log());
-
+		var o = connect.send('VKWebAppGetUserInfo', {});
+		alert(o);
 		const firebase = require("firebase");
 
 
