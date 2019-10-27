@@ -199,18 +199,6 @@ class App extends React.Component {
 		}
 
 		connect.send('VKWebAppGetUserInfo', {});
-		connect.send("VKWebAppGetAuthToken", {"app_id": 7165780});
-
-
-		let api = `https://api.vk.com/method/users.get?v=5.52&access_token=${this.state.authToken}`;
-		fetchJsonp(api)
-			.then(res => res.json())
-			.then(data => this.setState({ items : data.response.items}))
-			.catch(e => []);
-
-		alert(this.state.fetchedUser);
-
-		const firebase = require("firebase");
 
 
 		require("firebase/firestore");
