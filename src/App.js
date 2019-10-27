@@ -199,7 +199,7 @@ class App extends React.Component {
 		}
 
 		connect.send('VKWebAppGetUserInfo', {});
-
+		alert(console.log());
 
 		require("firebase/firestore");
 
