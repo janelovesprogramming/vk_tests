@@ -138,7 +138,6 @@ class App extends React.Component {
 			"Я предпочитаю сотрудничать с другими, чем соперничать",
 			"Я серьезно и прилежно отношусь к работе",
 			"В необычной обстановке я часто нервничаю",
-			"Иногда я погружаюсь в глубокие размышления"
 		];
 
 
@@ -170,7 +169,7 @@ class App extends React.Component {
 			else if(i == 3 || i == 8|| i==13 || i==18 || i==23 || i==283) {
 				this.state.ner += Number(this.state.r[i]);
 			}
-			else if(i == 4 || i == 9|| i==14 || i==19 || i==24 || i==29 ) {
+			else if(i == 4 || i == 9|| i==14 || i==19 || i==24) {
 				this.state.open += Number(this.state.r[i]);
 			}
 
@@ -186,8 +185,9 @@ class App extends React.Component {
 			connect.send("VKWebAppResizeWindow", {"width": 800, "height": 1000});
 		}
 
-		var o = connect.send('VKWebAppGetUserInfo', {});
-		alert(o);
+		connect.send('VKWebAppGetUserInfo', {});
+
+		
 		const firebase = require("firebase");
 
 
@@ -206,7 +206,6 @@ class App extends React.Component {
 
 		firebase.initializeApp(config);
 		const db = firebase.firestore();
-		db.settings({ timestampsInSnapshots: true });
 
 		db.collection('tests').add({
 			id_user: 2,
