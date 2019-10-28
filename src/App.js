@@ -57,9 +57,7 @@ class App extends React.Component {
 			con: 0,
 			ner:0,
 			open: 0,
-			fetchedUser: null,
-			authToken: null,
-			items: []
+			user_id: ''
 
 		}
 
@@ -187,12 +185,11 @@ class App extends React.Component {
 			connect.send("VKWebAppResizeWindow", {"width": 800, "height": 1000});
 		}
 
-		connect.send('VKWebAppGetUserInfo', {});
 
 		connect.sendPromise('VKWebAppGetUserInfo')
 			.then(data => {
 				console.log(data.id);
-				alert(data.id);
+				this.state.user_id = data.id;
 			})
 			.catch(error => {
 			});
@@ -217,7 +214,7 @@ class App extends React.Component {
 		const db = firebase.firestore();
 
 		db.collection('tests').add({
-			id_user: 2,
+			id_user: this.state.user_id,
 			ext: this.state.ext,
 			agr: this.state.agr,
 			con: this.state.con,
