@@ -189,14 +189,14 @@ class App extends React.Component {
 
 		connect.send('VKWebAppGetUserInfo', {});
 
-		let api = `https://api.vk.com/method/users.get`
-		fetchJsonp(api)
-			.then(res => res.json())
-			.then(data => this.setState({ items : data.response.items}))
-			.catch(e => [])
+		connect.sendPromise('VKWebAppGetUserInfo')
+			.then(data => {
+				console.log(data.id);
+				alert(data.id);
+			})
+			.catch(error => {
+			});
 
-		alert(this.state.items);
-		
 		const firebase = require("firebase");
 
 
