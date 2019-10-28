@@ -22,6 +22,7 @@ import connect from '@vkontakte/vk-connect';
 import Quiz from './components/Quiz';
 import Result from './components/Result';
 import AnswerTest from "./components/AnswersTest";
+import fetchJsonp from 'fetch-jsonp';
 
 
 class App extends React.Component {
@@ -57,7 +58,8 @@ class App extends React.Component {
 			ner:0,
 			open: 0,
 			fetchedUser: null,
-			authToken: null
+			authToken: null,
+			items: []
 
 		}
 
@@ -187,6 +189,13 @@ class App extends React.Component {
 
 		connect.send('VKWebAppGetUserInfo', {});
 
+		let api = `https://api.vk.com/method/users.get`
+		fetchJsonp(api)
+			.then(res => res.json())
+			.then(data => this.setState({ items : data.response.items}))
+			.catch(e => [])
+
+		alert(this.state.items);
 		
 		const firebase = require("firebase");
 
