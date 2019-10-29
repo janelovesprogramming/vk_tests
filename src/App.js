@@ -137,7 +137,7 @@ class App extends React.Component {
 			"Часто случается, что я руковожу, отдаю распоряжения другим людям",
 			"Я предпочитаю сотрудничать с другими, чем соперничать",
 			"Я серьезно и прилежно отношусь к работе",
-			"В необычной обстановке я часто нервничаю",
+			"Я полон идей",
 		];
 
 
@@ -189,11 +189,15 @@ class App extends React.Component {
 		connect.sendPromise('VKWebAppGetUserInfo')
 			.then(data => {
 				console.log(data.id);
-				this.state.user_id = data.id;
+				alert(data.id);
+				alert("fffff");
+				us_id = data.id;
+				alert(us_id);
 			})
 			.catch(error => {
 			});
-		
+
+
 		const firebase = require("firebase");
 
 
@@ -221,7 +225,8 @@ class App extends React.Component {
 			ner: this.state.ner,
 			open: this.state.open
 		});
-		alert(this.state.user_id);
+
+		
 		return answersCountKeys.filter(key => answersCount[key] === maxAnswerCount);
 
 	}
