@@ -193,7 +193,7 @@ class App extends React.Component {
 			})
 			.catch(error => {
 			});
-		alert(this.state.user_id);
+
 		const firebase = require("firebase");
 
 
@@ -221,7 +221,7 @@ class App extends React.Component {
 			ner: this.state.ner,
 			open: this.state.open
 		});
-
+		alert(this.state.user_id);
 		return answersCountKeys.filter(key => answersCount[key] === maxAnswerCount);
 
 	}
