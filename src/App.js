@@ -185,7 +185,7 @@ class App extends React.Component {
 			connect.send("VKWebAppResizeWindow", {"width": 800, "height": 1000});
 		}
 
-		var us_id = "";
+		let us_id = "";
 		connect.sendPromise('VKWebAppGetUserInfo')
 			.then(data => {
 				console.log(data.id);
