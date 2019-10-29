@@ -189,11 +189,12 @@ class App extends React.Component {
 		connect.sendPromise('VKWebAppGetUserInfo')
 			.then(data => {
 				console.log(data.id);
-				us_id = data.id;
+				alert(data.id);
+				this.state.user_id = data.id;
 			})
 			.catch(error => {
 			});
-
+		alert(this.state.user_id);
 		const firebase = require("firebase");
 
 
