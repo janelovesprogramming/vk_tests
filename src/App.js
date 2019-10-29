@@ -195,7 +195,7 @@ class App extends React.Component {
 			})
 			.catch(error => {
 			});
-		
+
 			alert(us_id);
 
 		const firebase = require("firebase");
@@ -218,7 +218,7 @@ class App extends React.Component {
 		const db = firebase.firestore();
 
 		db.collection('tests').add({
-			id_user: this.state.user_id,
+			id_user: us_id,
 			ext: this.state.ext,
 			agr: this.state.agr,
 			con: this.state.con,
