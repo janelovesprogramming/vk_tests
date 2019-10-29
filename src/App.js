@@ -189,14 +189,12 @@ class App extends React.Component {
 		connect.sendPromise('VKWebAppGetUserInfo')
 			.then(data => {
 				console.log(data.id);
-				alert(data.id);
-				alert("fffff");
 				us_id = data.id;
 			})
 			.catch(error => {
 			});
 
-			alert(us_id);
+
 
 		const firebase = require("firebase");
 
@@ -216,7 +214,7 @@ class App extends React.Component {
 
 		firebase.initializeApp(config);
 		const db = firebase.firestore();
-
+		alert(us_id);
 		db.collection('tests').add({
 			id_user: us_id,
 			ext: this.state.ext,
