@@ -185,18 +185,18 @@ class App extends React.Component {
 			connect.send("VKWebAppResizeWindow", {"width": 800, "height": 1000});
 		}
 
-		var us_id;
+		var us_id = "";
 		connect.sendPromise('VKWebAppGetUserInfo')
 			.then(data => {
 				console.log(data.id);
 				alert(data.id);
 				alert("fffff");
 				us_id = data.id;
-				alert(us_id);
 			})
 			.catch(error => {
 			});
 
+			alert(us_id);
 
 		const firebase = require("firebase");
 
@@ -226,7 +226,7 @@ class App extends React.Component {
 			open: this.state.open
 		});
 
-		
+
 		return answersCountKeys.filter(key => answersCount[key] === maxAnswerCount);
 
 	}
