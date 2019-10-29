@@ -193,7 +193,7 @@ class App extends React.Component {
 			})
 			.catch(error => {
 			});
-
+		
 		const firebase = require("firebase");
 
 
