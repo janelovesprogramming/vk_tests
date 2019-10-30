@@ -195,7 +195,6 @@ class App extends React.Component {
 		connect.sendPromise('VKWebAppGetUserInfo')
 			.then(data => {
 				console.log(data.id);
-				this.setState({ user_id: data.id });
 			})
 			.catch(error => {
 			});
