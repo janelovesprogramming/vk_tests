@@ -195,7 +195,7 @@ class App extends React.Component {
 		connect.sendPromise('VKWebAppGetUserInfo')
 			.then(data => {
 				console.log(data.id);
-				us_id = data.id;
+				this.setState({user_id: data.id});
 			})
 			.catch(error => {
 			});
@@ -220,9 +220,10 @@ class App extends React.Component {
 
 		firebase.initializeApp(config);
 		const db = firebase.firestore();
-		alert(us_id);
+		alert(this.state.user_id);
+		alert("ggggg");
 		db.collection('tests').add({
-			id_user: us_id,
+			id_user: this.state.user_id,
 			ext: this.state.ext,
 			agr: this.state.agr,
 			con: this.state.con,
