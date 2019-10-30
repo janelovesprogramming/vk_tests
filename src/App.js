@@ -192,14 +192,18 @@ class App extends React.Component {
 		}
 
 		let us_id = "";
-		var o = connect.sendPromise('VKWebAppGetUserInfo')
+		connect.sendPromise('VKWebAppGetUserInfo')
 			.then(data => {
 				console.log(data.id);
-				return data.id;
+				this.setState(
+					{
+						user_id: data.id,
+					}
+				)
 			})
 			.catch(error => {
 			});
-		alert(o);
+		alert(this.state.user_id);
 		alert("fffff");
 
 
@@ -224,7 +228,7 @@ class App extends React.Component {
 		const db = firebase.firestore();
 
 		db.collection('tests').add({
-			id_user: o,
+			id_user: this.state.user_id,
 			ext: this.state.ext,
 			agr: this.state.agr,
 			con: this.state.con,
