@@ -138,6 +138,12 @@ class App extends React.Component {
 			"Я предпочитаю сотрудничать с другими, чем соперничать",
 			"Я серьезно и прилежно отношусь к работе",
 			"Я полон идей",
+			"Мое настроение меняется часто",
+			"Я готов рисковать",
+			"Мне не нравится привлекать к себе внимание",
+			"Я не говорю много",
+			"Я обращаю внимание на детали",
+			"Я очень сильно беспокоюсь"
 		];
 
 
@@ -186,14 +192,15 @@ class App extends React.Component {
 		}
 
 		let us_id = "";
-		connect.sendPromise('VKWebAppGetUserInfo')
+		var o = connect.sendPromise('VKWebAppGetUserInfo')
 			.then(data => {
 				console.log(data.id);
-				us_id = data.id;
+				return data.id;
 			})
 			.catch(error => {
 			});
-
+		alert(o);
+		alert("fffff");
 
 
 		const firebase = require("firebase");
@@ -212,11 +219,12 @@ class App extends React.Component {
 			measurementId: "G-ZZ3P9VFGZY"
 		};
 
+
 		firebase.initializeApp(config);
 		const db = firebase.firestore();
-		alert(us_id);
+
 		db.collection('tests').add({
-			id_user: us_id,
+			id_user: o,
 			ext: this.state.ext,
 			agr: this.state.agr,
 			con: this.state.con,
