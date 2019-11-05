@@ -18,7 +18,7 @@ function Quiz(props) {
             />
         );
     }
-    
+
 
     return (
 
