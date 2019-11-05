@@ -4,10 +4,7 @@ import {
 	Panel,
 	Search,
 	FixedLayout,
-	Div,
-	Button,
 	platform,
-	ANDROID,
 	Root,
 	Radio,
 	PanelHeader
@@ -16,13 +13,11 @@ import '@vkontakte/vkui/dist/vkui.css'
 import Tasks from './components/Tasks'
 import AddTask from './components/AddTask'
 import EditTask from './components/EditTask'
-import {ComposedChart, Line, Area, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,} from 'recharts';
+import {ComposedChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,} from 'recharts';
 import { RouteNode } from 'react-router5'
 import connect from '@vkontakte/vk-connect';
 import Quiz from './components/Quiz';
-import Result from './components/Result';
-import AnswerTest from "./components/AnswersTest";
-import fetchJsonp from 'fetch-jsonp';
+
 
 
 class App extends React.Component {
@@ -159,16 +154,16 @@ class App extends React.Component {
 			if(i == 0 || i == 5|| i==10 || i==15 || i==20 || i==25) {
 				this.state.ext += Number(this.state.r[i]);
 			}
-			else if(i == 1 || i == 6|| i==11 || i==16 || i==21 || i==26 ) {
+			else if(i === 1 || i === 6|| i===11 || i===16 || i===21 || i===26 ) {
 				this.state.agr += Number(this.state.r[i]);
 			}
-			else if(i == 2 || i == 7|| i==12 || i==17 || i==22 || i==27 ) {
+			else if(i === 2 || i === 7|| i===12 || i===17 || i===22 || i===27 ) {
 				this.state.con += Number(this.state.r[i]);
 			}
-			else if(i == 3 || i == 8|| i==13 || i==18 || i==23 || i==283) {
+			else if(i === 3 || i === 8|| i===13 || i===18 || i===23 || i===283) {
 				this.state.ner += Number(this.state.r[i]);
 			}
-			else if(i == 4 || i == 9|| i==14 || i==19 || i==24) {
+			else if(i === 4 || i === 9|| i===14 || i===19 || i===24) {
 				this.state.open += Number(this.state.r[i]);
 			}
 
@@ -369,7 +364,7 @@ class App extends React.Component {
 			router
 		} = this.props
 
-		const osname = platform()
+
 		const activeView = (route.name === 'add') ? 'addView' : 'tasksView'
 		const activePanel = route.name
 

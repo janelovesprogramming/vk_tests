@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Div, Radio} from '@vkontakte/vkui'
 import '@vkontakte/vkui/dist/vkui.css'
 
 function AnswerTest(props) {
-    const task = props.tasks
-    const router = props.router
+
 
     return (
         <div>

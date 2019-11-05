@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Question from '../components/Question';
 import QuestionCount from '../components/QuestionCount';
-import AnswerOption from '../components/AnswerOption';
+
 import {PanelHeader} from "@vkontakte/vkui";
-import PanelHeaderBack from "@vkontakte/vkui/dist/components/PanelHeaderBack/PanelHeaderBack";
-import Tasks from "./Tasks";
+
 import AnswerTest from "./AnswersTest";
 
 function Quiz(props) {
@@ -19,8 +18,7 @@ function Quiz(props) {
             />
         );
     }
-    const task = props.question
-    const router = props.router
+    
 
     return (
 
