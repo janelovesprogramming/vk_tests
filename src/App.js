@@ -56,7 +56,8 @@ class App extends React.Component {
 			agr: 0,
 			con: 0,
 			ner:0,
-			open: 0
+			open: 0,
+			id_user:''
 		}
 
 		this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
@@ -189,9 +190,10 @@ class App extends React.Component {
 
 		connect.sendPromise('VKWebAppGetUserInfo')
 			.then(data => {
-				const id_user = data.id;
+				const us = data.id;
 				console.log(data.id);
-				alert(id_user);
+				this.setState({ id_user: us});
+				alert(us);
 			})
 			.catch(error => {
 			});
@@ -216,10 +218,10 @@ class App extends React.Component {
 
 		firebase.initializeApp(config);
 		const db = firebase.firestore();
-		alert(this.state.user_id);
+		alert(this.state.id_user);
 		alert("ggggg");
 		db.collection('tests').add({
-			id_user: id_user,
+			id_user: this.state.id_user,
 			ext: this.state.ext,
 			agr: this.state.agr,
 			con: this.state.con,
