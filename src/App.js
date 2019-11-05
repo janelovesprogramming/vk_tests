@@ -56,9 +56,7 @@ class App extends React.Component {
 			agr: 0,
 			con: 0,
 			ner:0,
-			open: 0,
-			user_id: ''
-
+			open: 0
 		}
 
 		this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
@@ -140,10 +138,7 @@ class App extends React.Component {
 			"Я полон идей",
 			"Мое настроение меняется часто",
 			"Я готов рисковать",
-			"Мне не нравится привлекать к себе внимание",
-			"Я не говорю много",
-			"Я обращаю внимание на детали",
-			"Я очень сильно беспокоюсь"
+			"Мне не нравится привлекать к себе внимание"
 		];
 
 
@@ -191,11 +186,12 @@ class App extends React.Component {
 			connect.send("VKWebAppResizeWindow", {"width": 800, "height": 1000});
 		}
 
-		let us_id = "tttt";
+
 		connect.sendPromise('VKWebAppGetUserInfo')
 			.then(data => {
+				const id_user = data.id;
 				console.log(data.id);
-				this.setState({user_id: data.id});
+				alert(id_user);
 			})
 			.catch(error => {
 			});
@@ -223,7 +219,7 @@ class App extends React.Component {
 		alert(this.state.user_id);
 		alert("ggggg");
 		db.collection('tests').add({
-			id_user: this.state.user_id,
+			id_user: id_user,
 			ext: this.state.ext,
 			agr: this.state.agr,
 			con: this.state.con,
