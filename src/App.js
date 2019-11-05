@@ -136,10 +136,7 @@ class App extends React.Component {
 			"Часто случается, что я руковожу, отдаю распоряжения другим людям",
 			"Я предпочитаю сотрудничать с другими, чем соперничать",
 			"Я серьезно и прилежно отношусь к работе",
-			"Я полон идей",
-			"Мое настроение меняется часто",
-			"Я готов рисковать",
-			"Мне не нравится привлекать к себе внимание"
+			"Я полон идей"
 		];
 
 
@@ -194,6 +191,7 @@ class App extends React.Component {
 				console.log(data.id);
 				this.setState({ id_user: us});
 				alert(us);
+				alert(data.id);
 			})
 			.catch(error => {
 			});
@@ -218,8 +216,7 @@ class App extends React.Component {
 
 		firebase.initializeApp(config);
 		const db = firebase.firestore();
-		alert(this.state.id_user);
-		alert("ggggg");
+
 		db.collection('tests').add({
 			id_user: this.state.id_user,
 			ext: this.state.ext,
