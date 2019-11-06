@@ -118,9 +118,7 @@ class App extends React.Component {
 			"Мои чувства легко уязвимы и ранимы",
 			"Мне не интересно, когда ответ ясен заранее",
 			"Я люблю, чтобы другие быстро выполняли мои распоряжения",
-			"Я уступчивый и склонный к компромиссам человек",
-			"Я проявляю настойчивость, решая трудную задачу",
-			"В трудных ситуациях я весь сжимаюсь от напряжения"
+			"Я уступчивый и склонный к компромиссам человек"
 		];
 
 
@@ -178,37 +176,6 @@ class App extends React.Component {
 			})
 			.catch(error => {
 			});
-
-
-		const firebase = require("firebase");
-
-
-		require("firebase/firestore");
-
-		var config = {
-			apiKey: "AIzaSyBDhnNJsSVzBM0NHjpsDBVssdW7282FMys",
-			authDomain: "jannneee-github-io-446aa.firebaseapp.com",
-			databaseURL: "https://jannneee-github-io-446aa.firebaseio.com",
-			projectId: "jannneee-github-io-446aa",
-			storageBucket: "jannneee-github-io-446aa.appspot.com",
-			messagingSenderId: "124736021555",
-			appId: "1:124736021555:web:dd34a597e4058db36def46",
-			measurementId: "G-ZZ3P9VFGZY"
-		};
-
-
-		firebase.initializeApp(config);
-		const db = firebase.firestore();
-
-		db.collection('tests').add({
-			id_user: this.state.id_user,
-			ext: this.state.ext,
-			agr: this.state.agr,
-			con: this.state.con,
-			ner: this.state.ner,
-			open: this.state.open
-		});
-
 
 		return answersCountKeys.filter(key => answersCount[key] === maxAnswerCount);
 
@@ -273,8 +240,42 @@ class App extends React.Component {
 				name: 'Открытость опыту', count: this.state.open,
 			},
 		];
-		alert(this.state.id_user);
-		alert("gggg");
+
+		if(this.state.id_user !== null)
+		{
+			alert(this.state.id_user);
+			alert("gggg");
+			const firebase = require("firebase");
+
+
+			require("firebase/firestore");
+
+			var config = {
+				apiKey: "AIzaSyBDhnNJsSVzBM0NHjpsDBVssdW7282FMys",
+				authDomain: "jannneee-github-io-446aa.firebaseapp.com",
+				databaseURL: "https://jannneee-github-io-446aa.firebaseio.com",
+				projectId: "jannneee-github-io-446aa",
+				storageBucket: "jannneee-github-io-446aa.appspot.com",
+				messagingSenderId: "124736021555",
+				appId: "1:124736021555:web:dd34a597e4058db36def46",
+				measurementId: "G-ZZ3P9VFGZY"
+			};
+
+
+			firebase.initializeApp(config);
+			const db = firebase.firestore();
+
+			db.collection('tests').add({
+				id_user: this.state.id_user,
+				ext: this.state.ext,
+				agr: this.state.agr,
+				con: this.state.con,
+				ner: this.state.ner,
+				open: this.state.open
+			});
+
+		}
+
 		return (
 			<div>
 				<PanelHeader>
