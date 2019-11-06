@@ -225,11 +225,7 @@ class App extends React.Component {
 
 	renderResult() {
 			if(this.state.id_user !== '') {
-				alert(this.state.id_user);
-				alert("gggg");
-
 				const firebase = require("firebase");
-
 
 				require("firebase/firestore");
 
@@ -250,11 +246,24 @@ class App extends React.Component {
 
 				db.collection('tests').add({
 					id_user: this.state.id_user,
-					ext: this.state.ext,
-					agr: this.state.agr,
-					con: this.state.con,
-					ner: this.state.ner,
-					open: this.state.open
+					q1: this.state.r[0],
+					q2: this.state.r[1],
+					q3: this.state.r[2],
+					q4: this.state.r[3],
+					q5: this.state.r[4],
+					q6: this.state.r[5],
+					q7: this.state.r[6],
+					q8: this.state.r[7],
+					q9: this.state.r[8],
+					q10: this.state.r[9],
+					q11: this.state.r[10],
+					q12: this.state.r[11],
+					q13: this.state.r[12],
+					q14: this.state.r[13],
+					q15: this.state.r[14],
+					q16: this.state.r[15],
+					q17: this.state.r[16],
+					q18: this.state.r[17]
 				});
 			}
 			const data = [
