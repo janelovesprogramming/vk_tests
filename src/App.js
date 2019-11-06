@@ -278,6 +278,7 @@ class App extends React.Component {
 				name: 'Открытость опыту', count: this.state.open,
 			},
 		];
+		alert(this.state.id_user);
 		return (
 			<div>
 				<PanelHeader>
