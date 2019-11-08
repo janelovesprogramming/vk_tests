@@ -102,24 +102,16 @@ class App extends React.Component {
 
 	componentDidMount() {
 
-		this.state.allquestions = ["Мне нравится заниматься физическими упражнениями",
-			"Люди считают меня отзывчивым и доброжелательным человеком",
-			"Я во всем ценю чистоту и порядок",
-			"Меня часто беспокоит мысль, что что-то может случится",
-			"Все новое вызывает у меня интерес",
-			"Если я ничем не занят, то меня это беспокоит",
-			"Я стараюсь проявлять дружелюбие ко всем людям",
-			"Моя комната всегда аккуратно прибрана",
-			"Иногда я расстраиваюсь из-за пустяков",
-			"Мне нравятся неожиданности",
-			"Я не могу долго оставаться в неподвижности",
-			"Я тактичен по отношения к другим людям",
-			"Я методичен и пунктуален во всем",
-			"Мои чувства легко уязвимы и ранимы",
-			"Мне не интересно, когда ответ ясен заранее",
-			"Я люблю, чтобы другие быстро выполняли мои распоряжения",
-			"Я уступчивый и склонный к компромиссам человек",
-			"Я целеустремленный человек"
+		this.state.allquestions = ["Я хорошо справляюсь со стрессом, всегда спокоен и расслаблен",
+			"Я склонен искать в других людях недостатки",
+			"Я склонен быть ленивым ",
+			"У меня мало художественных интересов",
+			"Я общительный человек",
+			"У меня развитое воображение",
+			"Я часто нахожусь в стрессовом состоянии",
+			"Я скрытный человек",
+			"Я серьезно выполняю данную мне работу",
+			"Я считаю, что я человек, которому доверяют другие люди"
 		];
 
 
@@ -139,19 +131,19 @@ class App extends React.Component {
 		const maxAnswerCount = Math.max.apply(null, answersCountValues);
 
 		for (let i = 0; i < this.state.r.length; i++) {
-			if(i === 0 || i === 5|| i===10 || i===15 || i===20 || i===25) {
+			if(i === 4 || i === 7) {
 				this.state.ext += Number(this.state.r[i]);
 			}
-			else if(i === 1 || i === 6|| i===11 || i===16 || i===21 || i===26 ) {
+			else if(i === 1 || i === 9) {
 				this.state.agr += Number(this.state.r[i]);
 			}
-			else if(i === 2 || i === 7|| i===12 || i===17 || i===22 || i===27 ) {
+			else if(i === 2 || i === 8) {
 				this.state.con += Number(this.state.r[i]);
 			}
-			else if(i === 3 || i === 8|| i===13 || i===18 || i===23 || i===283) {
+			else if(i === 0 || i === 6) {
 				this.state.ner += Number(this.state.r[i]);
 			}
-			else if(i === 4 || i === 9|| i===14 || i===19 || i===24) {
+			else if(i === 3 || i === 5) {
 				this.state.open += Number(this.state.r[i]);
 			}
 
@@ -195,9 +187,14 @@ class App extends React.Component {
 
 
 	renderQuiz() {
+		const divStyle = {
+			backgroundColor: "#FFFFFF",
+			minHeight: "200px",
+			boxSizing: "border-box"
+		}
 		return (
 			<Panel id='task'>
-				<div>
+				<div style={divStyle}>
 			<Quiz
 				answer={this.state.answer}
 				answerOptions={this.state.answerOptions}
@@ -207,8 +204,7 @@ class App extends React.Component {
 				onAnswerSelected={this.handleAnswerSelected}
 
 			/>
-				</div>
-				<div>
+
 					<p>
 						<Radio name="radio" value="5" checked = {this.state.val === "5"} onChange={this.handleAnswerSelected}>Полностью согласен</Radio>
 						<Radio name="radio" value="4" checked = {this.state.val === "4"} onChange={this.handleAnswerSelected}>Согласен</Radio>
@@ -256,14 +252,6 @@ class App extends React.Component {
 					q8: this.state.r[7],
 					q9: this.state.r[8],
 					q10: this.state.r[9],
-					q11: this.state.r[10],
-					q12: this.state.r[11],
-					q13: this.state.r[12],
-					q14: this.state.r[13],
-					q15: this.state.r[14],
-					q16: this.state.r[15],
-					q17: this.state.r[16],
-					q18: this.state.r[17]
 				});
 			}
 			const data = [
@@ -369,7 +357,12 @@ class App extends React.Component {
 
 		const activeView = (route.name === 'add') ? 'addView' : 'tasksView'
 		const activePanel = route.name
-
+		const divStyle = {
+			margin: "10px auto",
+			backgroundColor: "#FFFFFF",
+			minHeight: "200px",
+			boxSizing: "border-box"
+		}
 		return (
 
 			<Root activeView={activeView}>
@@ -389,7 +382,7 @@ class App extends React.Component {
 					</Panel>
 
 					<Panel id='task'>
-						<div>
+						<div style={divStyle}>
 							{this.state.result ? this.renderResult() : this.renderQuiz()}
 						</div>
 					</Panel>
