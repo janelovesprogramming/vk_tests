@@ -1,4 +1,6 @@
-import React from 'react'
+import React from "react";
+
+import { VictoryChart, VictoryPolarAxis, VictoryTheme} from "victory";
 import {
 	View,
 	Panel,
@@ -58,6 +60,7 @@ class App extends React.Component {
 			open: 0,
 			id_user:'',
 			cur : 0,
+
 		}
 
 		this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
@@ -211,9 +214,8 @@ class App extends React.Component {
 
 			});
 		}
+
 	}
-
-
 
 
 	getResults() {
@@ -492,6 +494,7 @@ class App extends React.Component {
 		const divStyle = {
 			margin: 3
 		}
+
 		return (
 			<div>
 				<PanelHeader>
@@ -514,6 +517,7 @@ class App extends React.Component {
 					<Legend />
 					<Bar dataKey="count" barSize={25} fill="#4169E1"/>
 				</ComposedChart>
+
 				<div>
 					<h2>Экстраверсия</h2>
 					<div style={divStyle}>
