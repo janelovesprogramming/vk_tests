@@ -1,6 +1,6 @@
 import React from "react";
 
-import { VictoryChart, VictoryPolarAxis, VictoryTheme} from "victory";
+import { VictoryChart, VictoryPolarAxis, VictoryTheme, VictoryBar} from "victory";
 import {
 	View,
 	Panel,
@@ -518,6 +518,35 @@ class App extends React.Component {
 					<Bar dataKey="count" barSize={25} fill="#4169E1"/>
 				</ComposedChart>
 
+				<VictoryChart polar
+							  theme={VictoryTheme.material}
+							  width={400}
+							  height={300}
+				>
+					{
+						["ext", "agr", "con", "ner", "open"].map((d, i) => {
+							return (
+								<VictoryPolarAxis dependentAxis
+												  key={i}
+												  label={d}
+												  labelPlacement="perpendicular"
+												  style={{ tickLabels: { fill: "none" } }}
+												  axisValue={d}
+								/>
+							);
+						})
+					}
+					<VictoryBar
+						style={{ data: { fill: "blue", width: 25 } }}
+						data={[
+							{ x: "ext", y: this.state.ext },
+							{ x: "agr", y: this.state.agr},
+							{ x: "con", y: this.state.con },
+							{ x: "ner", y: this.state.ner },
+							{ x: "open", y: this.state.open }
+						]}
+					/>
+				</VictoryChart>
 				<div>
 					<h2>Экстраверсия</h2>
 					<div style={divStyle}>
