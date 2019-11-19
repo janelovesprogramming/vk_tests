@@ -18,7 +18,6 @@ import connect from '@vkontakte/vk-connect';
 import Quiz from './components/Quiz';
 
 
-
 class App extends React.Component {
 	constructor(props) {
 		super(props)
@@ -490,9 +489,9 @@ class App extends React.Component {
 			},
 		];
 
-
-
-
+		const divStyle = {
+			margin: 3
+		}
 		return (
 			<div>
 				<PanelHeader>
@@ -515,6 +514,14 @@ class App extends React.Component {
 					<Legend />
 					<Bar dataKey="count" barSize={25} fill="#4169E1"/>
 				</ComposedChart>
+				<div>
+					<h2>Экстраверсия</h2>
+					<div style={divStyle}>
+						Высокие значения по фактору определяют направленность психики человека на экстраверсию.
+						Типичные экстраверты отличаются общительностью, любят развлечения и коллективные мероприятия, имеют большой круг друзей и знакомых, ощущают потребность общения с людьми, с которыми можно поговорить и приятно провести время, стремятся к праздности и развлечениям, не любят себя утруждать работой или учебой, тяготеют к острым, возбуждающим впечатлениям, часто рискуют, действуют импульсивно, необдуманно, по первому побуждению.
+					</div>
+				</div>
+
 			</div>
 
 			);
