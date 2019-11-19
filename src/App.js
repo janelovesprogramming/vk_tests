@@ -24,12 +24,17 @@ class App extends React.Component {
 		super(props)
 
 		this.state = {
-			tasks : [ 
-				{	
+			tasks : [
+				{
 					id : 1,
-					name : 'Big Five',
+					name : 'Short Big Five',
 					text : 'Определение типа личности'
 				},
+				{
+					id : 2,
+					name : 'Big Five 75',
+					text : 'Определение типа личности'
+				}
 
 			],
 			currentTaskId : null,
@@ -42,6 +47,7 @@ class App extends React.Component {
 			answersCount: {},
 			result: '',
 			allquestions: [],
+			allquestions_long_test: [],
 			r:[],
 			checked:false,
 			val: '',
@@ -51,16 +57,17 @@ class App extends React.Component {
 			con: 0,
 			ner:0,
 			open: 0,
-			id_user:''
+			id_user:'',
+			cur : 0,
 		}
 
 		this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
 	}
 
-	onChangeSearch = (search) => { 
+	onChangeSearch = (search) => {
 		this.setState({ search })
 	}
-	
+
 	addTask = (task) => {
 		task.id = this.state.tasks.length + 1
 		this.setState({
@@ -87,8 +94,8 @@ class App extends React.Component {
 	get tasks () {
 
 		const search = this.state.search.toLowerCase()
-		return this.state.tasks.filter((task) => 
-			task.name.toLowerCase().indexOf(search) > -1 || 
+		return this.state.tasks.filter((task) =>
+			task.name.toLowerCase().indexOf(search) > -1 ||
 			task.text.toLowerCase().indexOf(search) > -1)
 	}
 
@@ -97,6 +104,7 @@ class App extends React.Component {
 		return this.state.tasks.filter((task) =>
 			task.id === id
 		)
+
 	}
 
 
@@ -114,11 +122,96 @@ class App extends React.Component {
 			"Я считаю, что я человек, которому доверяют другие люди"
 		];
 
+		this.state.allquestions_long_test = [
+			"Мне нравится заниматься физкультурой",
+			"Люди считают меня отзывчивым и доброжелательным человеком",
+			"Я во всем ценю чистоту и порядок",
+			"Меня часто беспокоит мысль, что что-нибудь может случиться",
+			"Все новое вызывает у меня интерес",
+			"Если я ничем не занят, то это меня беспокоит",
+			"Я стараюсь проявлять дружелюбие ко всем людям",
+			"Моя комната всегда аккуратно прибрана",
+			"Иногда я расстраиваюсь из-за пустяков",
+			"Мне нравятся неожиданности",
+			"Я не могу долго оставаться в неподвижности",
+			"Я тактичен по отношения к другим людям",
+			"Я методичен и пунктуален во всем",
+			"Мои чувства легко уязвимы и ранимы",
+			"Мне не интересно, когда ответ ясен заранее",
+			"Я люблю, чтобы другие быстро выполняли мои распоряжения",
+			"Я уступчивый и склонный к компромиссам человек",
+			"Я проявляю настойчивость, решая трудную задачу",
+			"В трудных ситуациях я весь сжимаюсь от напряжения",
+			"У меня очень живое воображение",
+			"Мне часто приходится быть лидером, проявлять инициативу",
+			"Я всегда готов оказать помощь и разделить чужие трудности",
+			"Я очень старательный во всех делах человек",
+			"У меня часто выступает холодный пот и дрожат руки",
+			"Мне нравится мечтать",
+			"Часто случается, что я руковожу, отдаю распоряжения другим людям",
+			"Я предпочитаю сотрудничать с другими, чем соперничать",
+			"Я серьезно и прилежно отношусь к работе",
+			"В необычной обстановке я часто нервничаю",
+			"Иногда я погружаюсь в глубокие размышления",
+			"Мне нравится общаться с незнакомыми людьми",
+			"Большинство людей добры от природы",
+			"Люди часто доверяют мне ответственные дела",
+			"Иногда я чувствую себя одиноко, тоскливо и все валится из рук",
+			"Я хорошо знаю, что такое красота и элегантность",
+			"Мне нравится приобретать новых друзей и знакомых",
+			"Люди, с которыми я общаюсь, обычно мне нравятся",
+			"Я требователен и строг в работе",
+			"Когда я сильно расстроен, у меня тяжело на душе",
+			"Музыка способна так захватить меня, что я теряю чувство времени",
+			"Я люблю находиться в больших и веселых компаниях",
+			"Большинство людей честные, и им можно доверять",
+			"Я обычно работаю добросовестно",
+			"Я легко впадаю в депрессию",
+			"Настоящее произведение искусства вызывает у меня восхищение",
+			"«Болея» на спортивных соревнованиях, я забываю обо всем",
+			"Я стараюсь проявлять чуткость, когда имею дело с людьми",
+			"Я редко делаю необдуманно то, что хочу сделать",
+			"У меня много слабостей и недостатков",
+			"Я хорошо понимаю свое душевное состояние",
+			"Я часто игнорирую сигналы, предупреждающие об опасности",
+			"Радость других я разделяю как собственную",
+			"Я обычно контролирую свои чувства и желания",
+			"Если я терплю неудачу, то обычно обвиняю себя",
+			"Я верю, что чувства делают мою жизнь содержательнее",
+			"Мне нравятся карнавальные шествия и демонстрации",
+			"Я стараюсь поставить себя на место другого человека, чтобы его понять",
+			"В магазине я обычно долго выбираю то, что надумал купить",
+			"Иногда я чувствую себя жалким человеком",
+			"Я легко «вживаюсь» в переживания вымышленного героя",
+			"Я чувствую себя счастливым, когда на меня обращают внимание",
+			"В каждом человеке есть нечто, за что его можно уважать",
+			"Обычно я хорошо думаю, прежде чем действую",
+			"Часто у меня бывают взлеты и падения настроения",
+			"Иногда я чувствую себя фокусником, подшучивающим над людьми",
+			"Я привлекателен для лиц противоположного пола",
+			"Я всегда стараюсь быть добрым и внимательным с каждым человеком",
+			"Перед путешествием я намечаю точный план",
+			"Мое настроение легко меняется на противоположное",
+			"Я думаю, что жизнь – это азартная игра",
+			"Мне нравится выглядеть вызывающе",
+			"Некоторые говорят, что я снисходителен к окружающим",
+			"Я точно и методично выполняю свою работу",
+			"Иногда я бываю настолько взволнован, что даже плачу",
+			"Иногда я чувствую, что могу открыть в себе нечто новое"
+		]
+		if(this.state.currentTaskId === 1) {
+			this.setState({
+				question: this.state.allquestions[0],
 
-		this.setState({
-			question: this.state.allquestions[0],
+			});
+		}
+		else
+		{
+			this.setState({
+				question: this.state.allquestions_long_test[0],
 
-		});
+			});
+		}
 	}
 
 
@@ -131,19 +224,19 @@ class App extends React.Component {
 		const maxAnswerCount = Math.max.apply(null, answersCountValues);
 
 		for (let i = 0; i < this.state.r.length; i++) {
-			if(i === 4 || i === 7) {
+			if(i === 0 || i === 5 || i === 10 || i === 15 || i===20 || i ===25 || i===30 || i=== 35 || i===40 || i===45|| i===50 || i===55 || i=== 60 || i===65 || i===70) {
 				this.state.ext += Number(this.state.r[i]);
 			}
-			else if(i === 1 || i === 9) {
+			else if(i === 1 || i === 6 || i === 11 || i === 16 || i===21 || i ===26 || i===31 || i=== 36 || i===41 || i===46|| i===51 || i===56 || i=== 61 || i===66 || i===71) {
 				this.state.agr += Number(this.state.r[i]);
 			}
-			else if(i === 2 || i === 8) {
+			else if(i === 2 || i === 7 || i === 12 || i === 17 || i===22 || i ===27 || i===32 || i=== 37 || i===42 || i===47|| i===52 || i===57 || i=== 62 || i===67 || i===72) {
 				this.state.con += Number(this.state.r[i]);
 			}
-			else if(i === 0 || i === 6) {
+			else if(i === 3 || i === 8 || i === 13 || i === 18 || i===23 || i ===28 || i===33 || i=== 38 || i===43 || i===48|| i===53 || i===58 || i=== 63 || i===68 || i===73) {
 				this.state.ner += Number(this.state.r[i]);
 			}
-			else if(i === 3 || i === 5) {
+			else if(i === 4 || i === 9 || i === 14 || i === 19 || i===24 || i ===29 || i===34 || i=== 39 || i===44 || i===49|| i===54 || i===59 || i=== 64 || i===69 || i===74) {
 				this.state.open += Number(this.state.r[i]);
 			}
 
@@ -192,31 +285,73 @@ class App extends React.Component {
 			minHeight: "200px",
 			boxSizing: "border-box"
 		}
-		return (
-			<Panel id='task'>
-				<div style={divStyle}>
-			<Quiz
-				answer={this.state.answer}
-				answerOptions={this.state.answerOptions}
-				questionId={this.state.questionId}
-				question={this.state.question}
-				questionTotal={this.state.allquestions.length}
-				onAnswerSelected={this.handleAnswerSelected}
 
-			/>
+		if(this.state.currentTaskId === 1) {
+			return (
+				<Panel id='task'>
+					<div style={divStyle}>
+						<Quiz
+							answer={this.state.answer}
+							answerOptions={this.state.answerOptions}
+							questionId={this.state.questionId}
+							question={this.state.question}
+							questionTotal={this.state.allquestions.length}
+							onAnswerSelected={this.handleAnswerSelected}
 
-					<p>
-						<Radio name="radio" value="5" checked = {this.state.val === "5"} onChange={this.handleAnswerSelected}>Полностью согласен</Radio>
-						<Radio name="radio" value="4" checked = {this.state.val === "4"} onChange={this.handleAnswerSelected}>Согласен</Radio>
-						<Radio name="radio" value="3" checked = {this.state.val === "3"} onChange={this.handleAnswerSelected}>Не уверен</Radio>
-						<Radio name="radio" value="2" checked = {this.state.val === "2"} onChange={this.handleAnswerSelected}>Не согласен</Radio>
-						<Radio name="radio" value="1" checked = {this.state.val === "1"} onChange={this.handleAnswerSelected}>Поолностью не согласен</Radio>
-					</p>
-				</div>
-			</Panel>
+						/>
+
+						<p>
+							<Radio name="radio" value="5" checked={this.state.val === "5"}
+								   onChange={this.handleAnswerSelected}>Полностью согласен</Radio>
+							<Radio name="radio" value="4" checked={this.state.val === "4"}
+								   onChange={this.handleAnswerSelected}>Согласен</Radio>
+							<Radio name="radio" value="3" checked={this.state.val === "3"}
+								   onChange={this.handleAnswerSelected}>Не уверен</Radio>
+							<Radio name="radio" value="2" checked={this.state.val === "2"}
+								   onChange={this.handleAnswerSelected}>Не согласен</Radio>
+							<Radio name="radio" value="1" checked={this.state.val === "1"}
+								   onChange={this.handleAnswerSelected}>Поолностью не согласен</Radio>
+						</p>
+					</div>
+				</Panel>
 
 
-		);
+			);
+		}
+		else
+		{
+			return (
+				<Panel id='task'>
+					<div style={divStyle}>
+						<Quiz
+							answer={this.state.answer}
+							answerOptions={this.state.answerOptions}
+							questionId={this.state.questionId}
+							question={this.state.question}
+							questionTotal={this.state.allquestions_long_test.length}
+							onAnswerSelected={this.handleAnswerSelected}
+
+						/>
+
+						<p>
+							<Radio name="radio" value="5" checked={this.state.val === "5"}
+								   onChange={this.handleAnswerSelected}>Полностью согласен</Radio>
+							<Radio name="radio" value="4" checked={this.state.val === "4"}
+								   onChange={this.handleAnswerSelected}>Согласен</Radio>
+							<Radio name="radio" value="3" checked={this.state.val === "3"}
+								   onChange={this.handleAnswerSelected}>Не уверен</Radio>
+							<Radio name="radio" value="2" checked={this.state.val === "2"}
+								   onChange={this.handleAnswerSelected}>Не согласен</Radio>
+							<Radio name="radio" value="1" checked={this.state.val === "1"}
+								   onChange={this.handleAnswerSelected}>Поолностью не согласен</Radio>
+						</p>
+					</div>
+				</Panel>
+
+
+			);
+		}
+
 	}
 
 	renderResult() {
@@ -239,21 +374,104 @@ class App extends React.Component {
 
 				firebase.initializeApp(config);
 				const db = firebase.firestore();
-
-				db.collection('tests').add({
-					id_user: this.state.id_user,
-					q1: this.state.r[0],
-					q2: this.state.r[1],
-					q3: this.state.r[2],
-					q4: this.state.r[3],
-					q5: this.state.r[4],
-					q6: this.state.r[5],
-					q7: this.state.r[6],
-					q8: this.state.r[7],
-					q9: this.state.r[8],
-					q10: this.state.r[9],
-				});
+				if (this.state.currentTaskId === 1) {
+					db.collection('tests').add({
+						id_user: this.state.id_user,
+						q1: this.state.r[0],
+						q2: this.state.r[1],
+						q3: this.state.r[2],
+						q4: this.state.r[3],
+						q5: this.state.r[4],
+						q6: this.state.r[5],
+						q7: this.state.r[6],
+						q8: this.state.r[7],
+						q9: this.state.r[8],
+						q10: this.state.r[9],
+					});
+				}
+				else
+				{
+					db.collection('longtest').add({
+						id_user: this.state.id_user,
+						q1: this.state.r[0],
+						q2: this.state.r[1],
+						q3: this.state.r[2],
+						q4: this.state.r[3],
+						q5: this.state.r[4],
+						q6: this.state.r[5],
+						q7: this.state.r[6],
+						q8: this.state.r[7],
+						q9: this.state.r[8],
+						q10: this.state.r[9],
+						q11: this.state.r[10],
+						q12: this.state.r[11],
+						q13: this.state.r[12],
+						q14: this.state.r[13],
+						q15: this.state.r[14],
+						q16: this.state.r[15],
+						q17: this.state.r[16],
+						q18: this.state.r[17],
+						q19: this.state.r[18],
+						q20: this.state.r[19],
+						q21: this.state.r[20],
+						q22: this.state.r[21],
+						q23: this.state.r[22],
+						q24: this.state.r[23],
+						q25: this.state.r[24],
+						q26: this.state.r[25],
+						q27: this.state.r[26],
+						q28: this.state.r[27],
+						q29: this.state.r[28],
+						q30: this.state.r[29],
+						q31: this.state.r[30],
+						q32: this.state.r[31],
+						q33: this.state.r[32],
+						q34: this.state.r[33],
+						q35: this.state.r[34],
+						q36: this.state.r[35],
+						q37: this.state.r[36],
+						q38: this.state.r[37],
+						q39: this.state.r[38],
+						q40: this.state.r[39],
+						q41: this.state.r[40],
+						q42: this.state.r[41],
+						q43: this.state.r[42],
+						q44: this.state.r[43],
+						q45: this.state.r[44],
+						q46: this.state.r[45],
+						q47: this.state.r[46],
+						q48: this.state.r[47],
+						q49: this.state.r[48],
+						q50: this.state.r[49],
+						q51: this.state.r[50],
+						q52: this.state.r[51],
+						q53: this.state.r[52],
+						q54: this.state.r[53],
+						q55: this.state.r[54],
+						q56: this.state.r[55],
+						q57: this.state.r[56],
+						q58: this.state.r[57],
+						q59: this.state.r[58],
+						q60: this.state.r[59],
+						q61: this.state.r[60],
+						q62: this.state.r[61],
+						q63: this.state.r[62],
+						q64: this.state.r[63],
+						q65: this.state.r[64],
+						q66: this.state.r[65],
+						q67: this.state.r[66],
+						q68: this.state.r[67],
+						q69: this.state.r[68],
+						q70: this.state.r[69],
+						q71: this.state.r[70],
+						q72: this.state.r[71],
+						q73: this.state.r[72],
+						q74: this.state.r[73],
+						q75: this.state.r[74],
+					});
+				}
 			}
+
 			const data = [
 			{
 				name: 'Экстраверсия', count: this.state.ext,
@@ -316,17 +534,31 @@ class App extends React.Component {
 	setNextQuestion() {
 		const counter = this.state.counter + 1;
 		const questionId = this.state.questionId + 1;
+		if(this.state.currentTaskId === 1) {
+			this.setState({
+				counter: counter,
+				questionId: questionId,
+				question: this.state.allquestions[counter],
+				answer: '',
+			});
 
-		this.setState({
-			counter: counter,
-			questionId: questionId,
-			question: this.state.allquestions[counter],
-			answer: '',
-		});
+			let ele = document.getElementsByName("radio");
+			for (let i = 0; i < ele.length; i++)
+				ele[i].checked = false;
+		}
+		else
+		{
+			this.setState({
+				counter: counter,
+				questionId: questionId,
+				question: this.state.allquestions_long_test[counter],
+				answer: '',
+			});
 
-		let ele = document.getElementsByName("radio");
-		for(let i=0;i<ele.length;i++)
-			ele[i].checked = false;
+			let ele = document.getElementsByName("radio");
+			for (let i = 0; i < ele.length; i++)
+				ele[i].checked = false;
+		}
 
 	}
 	handleAnswerSelected(e) {
@@ -338,11 +570,20 @@ class App extends React.Component {
 			val: e.target.value
 		});
 
-
-		if (this.state.questionId < this.state.allquestions.length) {
-			setTimeout(() => this.setNextQuestion(), 300);
-		} else {
-			setTimeout(() => this.setResults(this.getResults()), 300);
+		if(this.state.currentTaskId === 1) {
+			if (this.state.questionId < this.state.allquestions.length) {
+				setTimeout(() => this.setNextQuestion(), 300);
+			} else {
+				setTimeout(() => this.setResults(this.getResults()), 300);
+			}
+		}
+		else
+		{
+			if (this.state.questionId < this.state.allquestions_long_test.length) {
+				setTimeout(() => this.setNextQuestion(), 300);
+			} else {
+				setTimeout(() => this.setResults(this.getResults()), 300);
+			}
 		}
 
 	}
