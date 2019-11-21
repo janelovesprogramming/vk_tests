@@ -24,11 +24,11 @@ const directions = {
 	180: "W", 225: "SW", 270: "S", 315: "SE"
 };
 
-const orange = { base: "gold", highlight: "darkOrange" };
+const orange = { base: "blue", highlight: "darkblue" };
 
-const red = { base: "tomato", highlight: "orangeRed" };
+const red = { base: "darkblue", highlight: "darkblue" };
 
-const innerRadius = 20;
+const innerRadius = 30;
 
 class CompassCenter extends React.Component {
 
@@ -49,8 +49,8 @@ class CompassCenter extends React.Component {
 
 class CenterLabel extends React.Component {
 	render() {
-		const { datum, active, color } = this.props;
-		const text = [ `${directions[datum._x]}`, `${Math.round(datum._y1)} mph` ];
+		const { datum, active, color, origin } = this.props;
+		const text = [ `${directions[datum._x]}`, `${Math.round(datum._y1)}` ];
 		const baseStyle = { fill: color.highlight, textAnchor: "middle" };
 		const style = [
 			{ ...baseStyle, fontSize: 18, fontWeight: "bold" },
@@ -60,7 +60,7 @@ class CenterLabel extends React.Component {
 		return active ?
 			(
 				<VictoryLabel
-					text={text} style={style} x={175} y={175} renderInPortal
+					text={text} style={style} x={100} y={100} renderInPortal
 				/>
 			) : null;
 	}
@@ -553,9 +553,30 @@ class App extends React.Component {
 				</ComposedChart>
 
 				<VictoryChart polar
+							  animate={{ duration: 500, onLoad: { duration: 500 } }}
 							  theme={VictoryTheme.material}
 							  width={400}
 							  height={300}
+							  innerRadius={innerRadius}
+							  domainPadding={{ y: 10 }}
+							  events={[{
+								  childName: "all",
+								  target: "data",
+								  eventHandlers: {
+									  onMouseOver: () => {
+										  return [
+											  { target: "labels", mutation: () => ({ active: true }) },
+											  { target: "data", mutation: () => ({ active: true }) }
+										  ];
+									  },
+									  onMouseOut: () => {
+										  return [
+											  { target: "labels", mutation: () => ({ active: false }) },
+											  { target: "data", mutation: () => ({ active: false }) }
+										  ];
+									  }
+								  }
+							  }]}
 				>
 					{
 						["ext", "agr", "con", "ner", "open"].map((d, i) => {
@@ -572,7 +593,10 @@ class App extends React.Component {
 					}
 
 					<VictoryBar
-						style={{data: {fill: "blue", width: 25}}}
+						style={{ data: {
+								fill: ({ active }) => active ? orange.highlight : orange.base,
+								width: 25
+							} }}
 						data={[
 							{x: "ext", y: this.state.ext},
 							{x: "agr", y: this.state.agr},
@@ -581,8 +605,9 @@ class App extends React.Component {
 							{x: "open", y: this.state.open}
 						]}
 						labels={() => ""}
-						labelComponent={<CenterLabel color={orange}/>}
 					/>
+
+					<CompassCenter/>
 				</VictoryChart>
 				<div>
 					{this.renderSwitch(0)}
@@ -790,6 +815,24 @@ class App extends React.Component {
 						return 'foo';
 				}
 
+			}
+			else if(this.state.big5mas[k]<5)
+			{
+				switch (k) {
+					case 0:
+						return(<div>Интроверсия. Характерные черты: замкнутость, скрытность</div>);
+					case 1:
+						return(<div>Стабильность.</div>);
+					case 2:
+						return(<div>Низкий самоконтроль</div>);
+					case 3:
+						return(<div>Низкий уровень эмоциональной устойчивости</div>);
+					case 4:
+						return(<div>Не экспрессивность</div>);
+					default:
+						return("something.....");
+
+				}
 			}
 		}
 	}
