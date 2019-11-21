@@ -1,6 +1,6 @@
 import React from "react";
 
-import { VictoryChart, VictoryPolarAxis, VictoryTheme, VictoryBar} from "victory";
+import { VictoryChart, VictoryPolarAxis, VictoryTheme, VictoryBar, VictoryLabel} from "victory";
 import {
 	View,
 	Panel,
@@ -19,27 +19,73 @@ import { RouteNode } from 'react-router5'
 import connect from '@vkontakte/vk-connect';
 import Quiz from './components/Quiz';
 
+const directions = {
+	0: "E", 45: "NE", 90: "N", 135: "NW",
+	180: "W", 225: "SW", 270: "S", 315: "SE"
+};
+
+const orange = { base: "gold", highlight: "darkOrange" };
+
+const red = { base: "tomato", highlight: "orangeRed" };
+
+const innerRadius = 20;
+
+class CompassCenter extends React.Component {
+
+	render() {
+		const { origin } = this.props;
+		const circleStyle = {
+			stroke: red.base, strokeWidth: 2, fill: orange.base
+		};
+		return (
+			<g>
+				<circle
+					cx={origin.x} cy={origin.y} r={innerRadius} style={circleStyle}
+				/>
+			</g>
+		);
+	}
+}
+
+class CenterLabel extends React.Component {
+	render() {
+		const { datum, active, color } = this.props;
+		const text = [ `${directions[datum._x]}`, `${Math.round(datum._y1)} mph` ];
+		const baseStyle = { fill: color.highlight, textAnchor: "middle" };
+		const style = [
+			{ ...baseStyle, fontSize: 18, fontWeight: "bold" },
+			{ ...baseStyle, fontSize: 12 }
+		];
+
+		return active ?
+			(
+				<VictoryLabel
+					text={text} style={style} x={175} y={175} renderInPortal
+				/>
+			) : null;
+	}
+}
 
 class App extends React.Component {
 	constructor(props) {
 		super(props)
 
 		this.state = {
-			tasks : [
+			tasks: [
 				{
-					id : 1,
-					name : 'Short Big Five',
-					text : 'Определение типа личности'
+					id: 1,
+					name: 'Short Big Five',
+					text: 'Определение типа личности'
 				},
 				{
-					id : 2,
-					name : 'Big Five 75',
-					text : 'Определение типа личности'
+					id: 2,
+					name: 'Big Five 75',
+					text: 'Определение типа личности'
 				}
 
 			],
-			currentTaskId : null,
-			search : '',
+			currentTaskId: null,
+			search: '',
 			counter: 0,
 			questionId: 1,
 			question: '',
@@ -49,17 +95,18 @@ class App extends React.Component {
 			result: '',
 			allquestions: [],
 			allquestions_long_test: [],
-			r:[],
-			checked:false,
+			r: [],
+			checked: false,
 			val: '',
-            clicked: false,
+			clicked: false,
 			ext: 0,
 			agr: 0,
 			con: 0,
-			ner:0,
+			ner: 0,
 			open: 0,
-			id_user:'',
-			cur : 0,
+			id_user: '',
+			cur: 0,
+			big5mas: [],
 
 		}
 
@@ -67,19 +114,18 @@ class App extends React.Component {
 	}
 
 	onChangeSearch = (search) => {
-		this.setState({ search })
+		this.setState({search})
 	}
 
 	addTask = (task) => {
 		task.id = this.state.tasks.length + 1
 		this.setState({
-			tasks : [...this.state.tasks, task]
+			tasks: [...this.state.tasks, task]
 		})
 	}
 
 
-
-	setCurrentTaskId = (currentTaskId) => this.setState({ currentTaskId })
+	setCurrentTaskId = (currentTaskId) => this.setState({currentTaskId})
 
 	editTask = (newTask) => {
 		let newTasks = this.state.tasks.map((task) => {
@@ -89,11 +135,11 @@ class App extends React.Component {
 			return task
 		})
 		this.setState({
-			tasks : newTasks
+			tasks: newTasks
 		})
 	}
 
-	get tasks () {
+	get tasks() {
 
 		const search = this.state.search.toLowerCase()
 		return this.state.tasks.filter((task) =>
@@ -101,7 +147,7 @@ class App extends React.Component {
 			task.text.toLowerCase().indexOf(search) > -1)
 	}
 
-	get task () {
+	get task() {
 		const id = Number(this.props.route.params.id) || this.state.currentTaskId
 		return this.state.tasks.filter((task) =>
 			task.id === id
@@ -201,14 +247,12 @@ class App extends React.Component {
 			"Иногда я бываю настолько взволнован, что даже плачу",
 			"Иногда я чувствую, что могу открыть в себе нечто новое"
 		]
-		if(this.state.currentTaskId === 1) {
+		if (this.state.currentTaskId === 1) {
 			this.setState({
 				question: this.state.allquestions[0],
 
 			});
-		}
-		else
-		{
+		} else {
 			this.setState({
 				question: this.state.allquestions_long_test[0],
 
@@ -225,22 +269,17 @@ class App extends React.Component {
 		const maxAnswerCount = Math.max.apply(null, answersCountValues);
 
 		for (let i = 0; i < this.state.r.length; i++) {
-			if(i === 0 || i === 5 || i === 10 || i === 15 || i===20 || i ===25 || i===30 || i=== 35 || i===40 || i===45|| i===50 || i===55 || i=== 60 || i===65 || i===70) {
+			if (i === 0 || i === 5 || i === 10 || i === 15 || i === 20 || i === 25 || i === 30 || i === 35 || i === 40 || i === 45 || i === 50 || i === 55 || i === 60 || i === 65 || i === 70) {
 				this.state.ext += Number(this.state.r[i]);
-			}
-			else if(i === 1 || i === 6 || i === 11 || i === 16 || i===21 || i ===26 || i===31 || i=== 36 || i===41 || i===46|| i===51 || i===56 || i=== 61 || i===66 || i===71) {
+			} else if (i === 1 || i === 6 || i === 11 || i === 16 || i === 21 || i === 26 || i === 31 || i === 36 || i === 41 || i === 46 || i === 51 || i === 56 || i === 61 || i === 66 || i === 71) {
 				this.state.agr += Number(this.state.r[i]);
-			}
-			else if(i === 2 || i === 7 || i === 12 || i === 17 || i===22 || i ===27 || i===32 || i=== 37 || i===42 || i===47|| i===52 || i===57 || i=== 62 || i===67 || i===72) {
+			} else if (i === 2 || i === 7 || i === 12 || i === 17 || i === 22 || i === 27 || i === 32 || i === 37 || i === 42 || i === 47 || i === 52 || i === 57 || i === 62 || i === 67 || i === 72) {
 				this.state.con += Number(this.state.r[i]);
-			}
-			else if(i === 3 || i === 8 || i === 13 || i === 18 || i===23 || i ===28 || i===33 || i=== 38 || i===43 || i===48|| i===53 || i===58 || i=== 63 || i===68 || i===73) {
+			} else if (i === 3 || i === 8 || i === 13 || i === 18 || i === 23 || i === 28 || i === 33 || i === 38 || i === 43 || i === 48 || i === 53 || i === 58 || i === 63 || i === 68 || i === 73) {
 				this.state.ner += Number(this.state.r[i]);
-			}
-			else if(i === 4 || i === 9 || i === 14 || i === 19 || i===24 || i ===29 || i===34 || i=== 39 || i===44 || i===49|| i===54 || i===59 || i=== 64 || i===69 || i===74) {
+			} else if (i === 4 || i === 9 || i === 14 || i === 19 || i === 24 || i === 29 || i === 34 || i === 39 || i === 44 || i === 49 || i === 54 || i === 59 || i === 64 || i === 69 || i === 74) {
 				this.state.open += Number(this.state.r[i]);
 			}
-
 
 
 		}
@@ -258,7 +297,7 @@ class App extends React.Component {
 			.then(data => {
 				const us = data.id;
 				console.log(data.id);
-				this.setState({ id_user: us});
+				this.setState({id_user: us});
 
 			})
 			.catch(error => {
@@ -271,13 +310,12 @@ class App extends React.Component {
 	setResults(result) {
 
 		if (result.length === 1) {
-			this.setState({ result: result[0] });
+			this.setState({result: result[0]});
 		} else {
-			this.setState({ result: 'Undetermined' });
+			this.setState({result: 'Undetermined'});
 		}
 
 	}
-
 
 
 	renderQuiz() {
@@ -287,7 +325,7 @@ class App extends React.Component {
 			boxSizing: "border-box"
 		}
 
-		if(this.state.currentTaskId === 1) {
+		if (this.state.currentTaskId === 1) {
 			return (
 				<Panel id='task'>
 					<div style={divStyle}>
@@ -318,9 +356,7 @@ class App extends React.Component {
 
 
 			);
-		}
-		else
-		{
+		} else {
 			return (
 				<Panel id='task'>
 					<div style={divStyle}>
@@ -356,132 +392,130 @@ class App extends React.Component {
 	}
 
 	renderResult() {
-			if(this.state.id_user !== '') {
-				const firebase = require("firebase");
+		if (this.state.id_user !== '') {
+			const firebase = require("firebase");
 
-				require("firebase/firestore");
+			require("firebase/firestore");
 
-				var config = {
-					apiKey: "AIzaSyBDhnNJsSVzBM0NHjpsDBVssdW7282FMys",
-					authDomain: "jannneee-github-io-446aa.firebaseapp.com",
-					databaseURL: "https://jannneee-github-io-446aa.firebaseio.com",
-					projectId: "jannneee-github-io-446aa",
-					storageBucket: "jannneee-github-io-446aa.appspot.com",
-					messagingSenderId: "124736021555",
-					appId: "1:124736021555:web:dd34a597e4058db36def46",
-					measurementId: "G-ZZ3P9VFGZY"
-				};
+			var config = {
+				apiKey: "AIzaSyBDhnNJsSVzBM0NHjpsDBVssdW7282FMys",
+				authDomain: "jannneee-github-io-446aa.firebaseapp.com",
+				databaseURL: "https://jannneee-github-io-446aa.firebaseio.com",
+				projectId: "jannneee-github-io-446aa",
+				storageBucket: "jannneee-github-io-446aa.appspot.com",
+				messagingSenderId: "124736021555",
+				appId: "1:124736021555:web:dd34a597e4058db36def46",
+				measurementId: "G-ZZ3P9VFGZY"
+			};
 
 
-				firebase.initializeApp(config);
-				const db = firebase.firestore();
-				if (this.state.currentTaskId === 1) {
-					db.collection('tests').add({
-						id_user: this.state.id_user,
-						q1: this.state.r[0],
-						q2: this.state.r[1],
-						q3: this.state.r[2],
-						q4: this.state.r[3],
-						q5: this.state.r[4],
-						q6: this.state.r[5],
-						q7: this.state.r[6],
-						q8: this.state.r[7],
-						q9: this.state.r[8],
-						q10: this.state.r[9],
-					});
-				}
-				else
-				{
-					db.collection('longtest').add({
-						id_user: this.state.id_user,
-						q1: this.state.r[0],
-						q2: this.state.r[1],
-						q3: this.state.r[2],
-						q4: this.state.r[3],
-						q5: this.state.r[4],
-						q6: this.state.r[5],
-						q7: this.state.r[6],
-						q8: this.state.r[7],
-						q9: this.state.r[8],
-						q10: this.state.r[9],
-						q11: this.state.r[10],
-						q12: this.state.r[11],
-						q13: this.state.r[12],
-						q14: this.state.r[13],
-						q15: this.state.r[14],
-						q16: this.state.r[15],
-						q17: this.state.r[16],
-						q18: this.state.r[17],
-						q19: this.state.r[18],
-						q20: this.state.r[19],
-						q21: this.state.r[20],
-						q22: this.state.r[21],
-						q23: this.state.r[22],
-						q24: this.state.r[23],
-						q25: this.state.r[24],
-						q26: this.state.r[25],
-						q27: this.state.r[26],
-						q28: this.state.r[27],
-						q29: this.state.r[28],
-						q30: this.state.r[29],
-						q31: this.state.r[30],
-						q32: this.state.r[31],
-						q33: this.state.r[32],
-						q34: this.state.r[33],
-						q35: this.state.r[34],
-						q36: this.state.r[35],
-						q37: this.state.r[36],
-						q38: this.state.r[37],
-						q39: this.state.r[38],
-						q40: this.state.r[39],
-						q41: this.state.r[40],
-						q42: this.state.r[41],
-						q43: this.state.r[42],
-						q44: this.state.r[43],
-						q45: this.state.r[44],
-						q46: this.state.r[45],
-						q47: this.state.r[46],
-						q48: this.state.r[47],
-						q49: this.state.r[48],
-						q50: this.state.r[49],
-						q51: this.state.r[50],
-						q52: this.state.r[51],
-						q53: this.state.r[52],
-						q54: this.state.r[53],
-						q55: this.state.r[54],
-						q56: this.state.r[55],
-						q57: this.state.r[56],
-						q58: this.state.r[57],
-						q59: this.state.r[58],
-						q60: this.state.r[59],
-						q61: this.state.r[60],
-						q62: this.state.r[61],
-						q63: this.state.r[62],
-						q64: this.state.r[63],
-						q65: this.state.r[64],
-						q66: this.state.r[65],
-						q67: this.state.r[66],
-						q68: this.state.r[67],
-						q69: this.state.r[68],
-						q70: this.state.r[69],
-						q71: this.state.r[70],
-						q72: this.state.r[71],
-						q73: this.state.r[72],
-						q74: this.state.r[73],
-						q75: this.state.r[74],
-					});
-				}
+			firebase.initializeApp(config);
+			const db = firebase.firestore();
+			if (this.state.currentTaskId === 1) {
+				db.collection('tests').add({
+					id_user: this.state.id_user,
+					q1: this.state.r[0],
+					q2: this.state.r[1],
+					q3: this.state.r[2],
+					q4: this.state.r[3],
+					q5: this.state.r[4],
+					q6: this.state.r[5],
+					q7: this.state.r[6],
+					q8: this.state.r[7],
+					q9: this.state.r[8],
+					q10: this.state.r[9],
+				});
+			} else {
+				db.collection('longtest').add({
+					id_user: this.state.id_user,
+					q1: this.state.r[0],
+					q2: this.state.r[1],
+					q3: this.state.r[2],
+					q4: this.state.r[3],
+					q5: this.state.r[4],
+					q6: this.state.r[5],
+					q7: this.state.r[6],
+					q8: this.state.r[7],
+					q9: this.state.r[8],
+					q10: this.state.r[9],
+					q11: this.state.r[10],
+					q12: this.state.r[11],
+					q13: this.state.r[12],
+					q14: this.state.r[13],
+					q15: this.state.r[14],
+					q16: this.state.r[15],
+					q17: this.state.r[16],
+					q18: this.state.r[17],
+					q19: this.state.r[18],
+					q20: this.state.r[19],
+					q21: this.state.r[20],
+					q22: this.state.r[21],
+					q23: this.state.r[22],
+					q24: this.state.r[23],
+					q25: this.state.r[24],
+					q26: this.state.r[25],
+					q27: this.state.r[26],
+					q28: this.state.r[27],
+					q29: this.state.r[28],
+					q30: this.state.r[29],
+					q31: this.state.r[30],
+					q32: this.state.r[31],
+					q33: this.state.r[32],
+					q34: this.state.r[33],
+					q35: this.state.r[34],
+					q36: this.state.r[35],
+					q37: this.state.r[36],
+					q38: this.state.r[37],
+					q39: this.state.r[38],
+					q40: this.state.r[39],
+					q41: this.state.r[40],
+					q42: this.state.r[41],
+					q43: this.state.r[42],
+					q44: this.state.r[43],
+					q45: this.state.r[44],
+					q46: this.state.r[45],
+					q47: this.state.r[46],
+					q48: this.state.r[47],
+					q49: this.state.r[48],
+					q50: this.state.r[49],
+					q51: this.state.r[50],
+					q52: this.state.r[51],
+					q53: this.state.r[52],
+					q54: this.state.r[53],
+					q55: this.state.r[54],
+					q56: this.state.r[55],
+					q57: this.state.r[56],
+					q58: this.state.r[57],
+					q59: this.state.r[58],
+					q60: this.state.r[59],
+					q61: this.state.r[60],
+					q62: this.state.r[61],
+					q63: this.state.r[62],
+					q64: this.state.r[63],
+					q65: this.state.r[64],
+					q66: this.state.r[65],
+					q67: this.state.r[66],
+					q68: this.state.r[67],
+					q69: this.state.r[68],
+					q70: this.state.r[69],
+					q71: this.state.r[70],
+					q72: this.state.r[71],
+					q73: this.state.r[72],
+					q74: this.state.r[73],
+					q75: this.state.r[74],
+				});
 			}
+		}
 
-			const data = [
+		const data = [
 			{
 				name: 'Экстраверсия', count: this.state.ext,
 			},
 			{
-				name: 'Доброжелательность',  count: this.state.agr,
+				name: 'Доброжелательность', count: this.state.agr,
 			},
 			{
-				name: 'Добросовестность',  count: this.state.con,
+				name: 'Добросовестность', count: this.state.con,
 			},
 			{
 				name: 'Нейротизм', count: this.state.ner,
@@ -506,15 +540,15 @@ class App extends React.Component {
 					height={300}
 					data={data}
 					margin={{
-						top: 40, right: 40, bottom: 40, left:80,
+						top: 40, right: 40, bottom: 40, left: 80,
 					}}
 					fontSize={12}
 				>
-					<CartesianGrid stroke="#f5f5f5" />
-					<XAxis type="number" />
-					<YAxis dataKey="name" type="category" />
-					<Tooltip />
-					<Legend />
+					<CartesianGrid stroke="#f5f5f5"/>
+					<XAxis type="number"/>
+					<YAxis dataKey="name" type="category"/>
+					<Tooltip/>
+					<Legend/>
 					<Bar dataKey="count" barSize={25} fill="#4169E1"/>
 				</ComposedChart>
 
@@ -530,35 +564,237 @@ class App extends React.Component {
 												  key={i}
 												  label={d}
 												  labelPlacement="perpendicular"
-												  style={{ tickLabels: { fill: "none" } }}
+												  style={{tickLabels: {fill: "none"}}}
 												  axisValue={d}
 								/>
 							);
 						})
 					}
+
 					<VictoryBar
-						style={{ data: { fill: "blue", width: 25 } }}
+						style={{data: {fill: "blue", width: 25}}}
 						data={[
-							{ x: "ext", y: this.state.ext },
-							{ x: "agr", y: this.state.agr},
-							{ x: "con", y: this.state.con },
-							{ x: "ner", y: this.state.ner },
-							{ x: "open", y: this.state.open }
+							{x: "ext", y: this.state.ext},
+							{x: "agr", y: this.state.agr},
+							{x: "con", y: this.state.con},
+							{x: "ner", y: this.state.ner},
+							{x: "open", y: this.state.open}
 						]}
+						labels={() => ""}
+						labelComponent={<CenterLabel color={orange}/>}
 					/>
 				</VictoryChart>
 				<div>
-					<h2>Экстраверсия</h2>
-					<div style={divStyle}>
-						Высокие значения по фактору определяют направленность психики человека на экстраверсию.
-						Типичные экстраверты отличаются общительностью, любят развлечения и коллективные мероприятия, имеют большой круг друзей и знакомых, ощущают потребность общения с людьми, с которыми можно поговорить и приятно провести время, стремятся к праздности и развлечениям, не любят себя утруждать работой или учебой, тяготеют к острым, возбуждающим впечатлениям, часто рискуют, действуют импульсивно, необдуманно, по первому побуждению.
-					</div>
+					{this.renderSwitch(0)}
+					{this.renderSwitch(1)}
+					{this.renderSwitch(2)}
+					{this.renderSwitch(3)}
+					{this.renderSwitch(4)}
 				</div>
 
 			</div>
 
-			);
+		);
 	}
+
+	renderSwitch(k) {
+		const divStyle = {
+			margin: 3
+		}
+
+		this.state.big5mas = [this.state.ext, this.state.agr, this.state.con, this.state.ner, this.state.open];
+
+		if (this.state.currentTaskId === 2) {
+
+			if (this.state.big5mas[k] > 51) {
+				switch (k) {
+					case 0:
+						return (
+							<div>
+								<h2>Экстраверсия </h2>
+								<div style={divStyle}>
+									Чем выше показатель, тем более открытым и общительным является человек. Классический
+									экстраверт обожает быть душой компании, у него много друзей и еще больше знакомых.
+									Он испытывает необходимость общаться с людьми, любит адреналин и похвалу, легок на
+									подъем и оптимистичен. Из-за слабого самоконтроля может неожиданно вспылить.
+									Преимущество работы с экстравертом в том, что он действует быстро и с легкостью
+									решает сложные задачи, когда горят сроки. Несмотря на высокую работоспособность, не
+									очень любит утруждать себя работой и старается выполнить ее быстрее. Не переносит
+									монотонный труд, предпочитает работать с людьми, а не с компьютером или документами.
+									Для личности характерны общительность, поиск впечатлений, доминирование, активность
+									и любовь к всеобщему вниманию.
+								</div>
+							</div>
+						);
+
+					case 1:
+						return (
+							<div><h2>Привязанность</h2>
+							<div style={divStyle}> Высокие показатели присущи филантропам, которым нравится находиться
+								среди людей. Эти личности отзывчивы и благожелательны, им удается отлично понимать
+								других и спокойно относиться к чужим недостаткам. Во время работы с коллективом такие
+								люди изо всех сил стараются поддерживать благоприятную атмосферу и не допускать
+								конфликтов. Они всегда качественно выполняют свои задачи, пользуются уважением других и
+								умеют сопереживать. Им не присущ соревновательный дух и больше нравится работать сообща.
+								Характерологические признаки личности: теплота, доверчивость, привязанность, склонность
+								к сотрудничеству, способность завоевывать уважение людей.
+							</div>
+						</div>);
+					case 2:
+						return (
+							<div>
+								<h2>Самоконтроль</h2>
+								<div style={divStyle}>
+									Человек, набравший высокие баллы, обладает отличным самоконтролем, он ответственный,
+									аккуратный и добросовестный. Главное для него – комфорт и упорядоченность. Обычно
+									достигает отличных результатов в работе. Высокий уровень самоконтроля может привести
+									к тому, что он предпочтет пожертвовать собственным комфортом ради общественного
+									блага. Для такого человека моральные принципы – не пустой звук: он всегда следует
+									правилам и нормам поведения, даже когда они кажутся устаревшей формальностью.
+									Подобные личности редко проявляют чувства, так как слишком зажаты.
+									Отличаются аккуратностью, ответственностью настойчивостью и предусмотрительностью.
+								</div>
+
+							</div>);
+					case 3:
+						return (
+							<div>
+								<h2>Уровень эмоциональной устойчивости</h2>
+								<div style={divStyle}>
+									Высокие показатели присущи личностям, которые не могут держать под контролем
+									собственные эмоции и импульсивные влечения. Таких людей характеризует низкая
+									эмоциональная устойчивость, они безответственны, капризны и предпочитают
+									игнорировать реальность. Ощущают себя беспомощными и неспособными побороть жизненные
+									препятствия. Подобные личности уверены, что каждую минуту все может пойти под откос,
+									и тревожно ждут этого момента. А когда он наступает, мгновенно погружаются в бездну
+									депрессии и отчаяния. Им тяжело выполнять какую-либо работу в состоянии
+									психологического напряжения. В большинстве своем они легко ранимы и отличаются
+									заниженной самооценкой.
+									Обладателям высоких баллов свойственна тревожность, напряженность, эмоциональная
+									лабильность (неустойчивость), склонность к самокритике и депрессиям.
+								</div>
+
+							</div>);
+					case 4:
+						return (
+							<div>
+								<h2>Экспрессивность</h2>
+								<div style={divStyle}>
+									Для респондентов с высокими показателями характерны такие черты, как беззаботность,
+									легкомыслие, отношение к жизни как к игре. Такие люди предпочитают абстрактные идеи
+									материальным ценностям. Обычно это громкий, эмоциональный человек, который скорее
+									поверит своей интуиции, а не голосу разума и обладает утонченным художественным
+									вкусом. Имеет разносторонние интересы, легко и быстро учится новому, однако не любит
+									систематизировать знания, поэтому редко бывает успешен в области науки. Избегает
+									рутины и часто прокрастинирует решение повседневных задач.
+									Обладателям высоких баллов присущи любознательность, артистичность, экспрессивность,
+									пластичность и сенситивность.
+								</div>
+
+							</div>);
+					default:
+						return 'foo';
+				}
+
+			}
+		}
+		else
+		{
+			if (this.state.big5mas[k] > 8) {
+				switch (k) {
+					case 0:
+						return (
+							<div>
+								<h2>Экстраверсия </h2>
+								<div style={divStyle}>
+									Чем выше показатель, тем более открытым и общительным является человек. Классический
+									экстраверт обожает быть душой компании, у него много друзей и еще больше знакомых.
+									Он испытывает необходимость общаться с людьми, любит адреналин и похвалу, легок на
+									подъем и оптимистичен. Из-за слабого самоконтроля может неожиданно вспылить.
+									Преимущество работы с экстравертом в том, что он действует быстро и с легкостью
+									решает сложные задачи, когда горят сроки. Несмотря на высокую работоспособность, не
+									очень любит утруждать себя работой и старается выполнить ее быстрее. Не переносит
+									монотонный труд, предпочитает работать с людьми, а не с компьютером или документами.
+									Для личности характерны общительность, поиск впечатлений, доминирование, активность
+									и любовь к всеобщему вниманию.
+								</div>
+							</div>
+						);
+
+					case 1:
+						return (
+							<div><h2>Привязанность</h2>
+								<div style={divStyle}> Высокие показатели присущи филантропам, которым нравится находиться
+									среди людей. Эти личности отзывчивы и благожелательны, им удается отлично понимать
+									других и спокойно относиться к чужим недостаткам. Во время работы с коллективом такие
+									люди изо всех сил стараются поддерживать благоприятную атмосферу и не допускать
+									конфликтов. Они всегда качественно выполняют свои задачи, пользуются уважением других и
+									умеют сопереживать. Им не присущ соревновательный дух и больше нравится работать сообща.
+									Характерологические признаки личности: теплота, доверчивость, привязанность, склонность
+									к сотрудничеству, способность завоевывать уважение людей.
+								</div>
+							</div>);
+					case 2:
+						return (
+							<div>
+								<h2>Самоконтроль</h2>
+								<div style={divStyle}>
+									Человек, набравший высокие баллы, обладает отличным самоконтролем, он ответственный,
+									аккуратный и добросовестный. Главное для него – комфорт и упорядоченность. Обычно
+									достигает отличных результатов в работе. Высокий уровень самоконтроля может привести
+									к тому, что он предпочтет пожертвовать собственным комфортом ради общественного
+									блага. Для такого человека моральные принципы – не пустой звук: он всегда следует
+									правилам и нормам поведения, даже когда они кажутся устаревшей формальностью.
+									Подобные личности редко проявляют чувства, так как слишком зажаты.
+									Отличаются аккуратностью, ответственностью настойчивостью и предусмотрительностью.
+								</div>
+
+							</div>);
+					case 3:
+						return (
+							<div>
+								<h2>Уровень эмоциональной устойчивости</h2>
+								<div style={divStyle}>
+									Высокие показатели присущи личностям, которые не могут держать под контролем
+									собственные эмоции и импульсивные влечения. Таких людей характеризует низкая
+									эмоциональная устойчивость, они безответственны, капризны и предпочитают
+									игнорировать реальность. Ощущают себя беспомощными и неспособными побороть жизненные
+									препятствия. Подобные личности уверены, что каждую минуту все может пойти под откос,
+									и тревожно ждут этого момента. А когда он наступает, мгновенно погружаются в бездну
+									депрессии и отчаяния. Им тяжело выполнять какую-либо работу в состоянии
+									психологического напряжения. В большинстве своем они легко ранимы и отличаются
+									заниженной самооценкой.
+									Обладателям высоких баллов свойственна тревожность, напряженность, эмоциональная
+									лабильность (неустойчивость), склонность к самокритике и депрессиям.
+								</div>
+
+							</div>);
+					case 4:
+						return (
+							<div>
+								<h2>Экспрессивность</h2>
+								<div style={divStyle}>
+									Для респондентов с высокими показателями характерны такие черты, как беззаботность,
+									легкомыслие, отношение к жизни как к игре. Такие люди предпочитают абстрактные идеи
+									материальным ценностям. Обычно это громкий, эмоциональный человек, который скорее
+									поверит своей интуиции, а не голосу разума и обладает утонченным художественным
+									вкусом. Имеет разносторонние интересы, легко и быстро учится новому, однако не любит
+									систематизировать знания, поэтому редко бывает успешен в области науки. Избегает
+									рутины и часто прокрастинирует решение повседневных задач.
+									Обладателям высоких баллов присущи любознательность, артистичность, экспрессивность,
+									пластичность и сенситивность.
+								</div>
+
+							</div>);
+					default:
+						return 'foo';
+				}
+
+			}
+		}
+	}
+
+
 
 	setUserAnswer(answer) {
 		this.setState((state, props) => ({
