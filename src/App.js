@@ -644,7 +644,7 @@ class App extends React.Component {
 					case 0:
 						return (
 							<div>
-								<h2>Экстраверсия </h2>
+								<h2>Экстраверсия {Math.round((this.state.ext * (100/75)),2)}%</h2>
 								<p align="center">
 									<img src={extr} width={400} height={300}/>
 								</p>
@@ -661,7 +661,7 @@ class App extends React.Component {
 
 					case 1:
 						return (
-							<div><h2>Привязанность</h2>
+							<div><h2>Привязанность {Math.round((this.state.agr * (100/75)),2)}%</h2>
 								<p align="center">
 									<img src={agrt} width={400} height={300}/>
 								</p>
@@ -678,7 +678,7 @@ class App extends React.Component {
 					case 2:
 						return (
 							<div>
-								<h2>Самоконтроль</h2>
+								<h2>Самоконтроль {Math.round((this.state.con * (100/75)),2)}%</h2>
 								<p align="center">
 									<img src={sam} width={400} height={300}/>
 								</p>
@@ -695,7 +695,7 @@ class App extends React.Component {
 					case 3:
 						return (
 							<div>
-								<h2>Эмоциональная неустойчивость</h2>
+								<h2>Эмоциональная неустойчивость {Math.round((this.state.ner * (100/75)),2)}%</h2>
 								<p align="center">
 									<img src={notemo} width={400} height={300}/>
 								</p>
@@ -711,7 +711,7 @@ class App extends React.Component {
 					case 4:
 						return (
 							<div>
-								<h2>Экспрессивность</h2>
+								<h2>Экспрессивность {Math.round((this.state.open * (100/75)),2)}%</h2>
 								<p align="center">
 									<img src={exp} width={400} height={300}/>
 								</p>
@@ -734,7 +734,7 @@ class App extends React.Component {
 					case 0:
 						return (
 							<div>
-								<h2>Интроверсия</h2>
+								<h2>Интроверсия {100 - Math.round((this.state.ext * (100/75)),2)}%</h2>
 								<p align="center">
 									<img src={entr} width={400} height={300}/>
 								</p>
@@ -750,7 +750,7 @@ class App extends React.Component {
 
 					case 1:
 						return (
-							<div><h2>Обособленность</h2>
+							<div><h2>Обособленность {100 - Math.round((this.state.agr * (100/75)),2)}%</h2>
 								<p align="center">
 									<img src={ob} width={400} height={300}/>
 								</p>
@@ -765,7 +765,7 @@ class App extends React.Component {
 					case 2:
 						return (
 							<div>
-								<h2>Импульсивность</h2>
+								<h2>Импульсивность {100 - Math.round((this.state.con * (100/75)),2)}%</h2>
 								<p align="center">
 									<img src={impuls} width={400} height={300}/>
 								</p>
@@ -781,7 +781,7 @@ class App extends React.Component {
 					case 3:
 						return (
 							<div>
-								<h2>Эмоциональная устойчивость</h2>
+								<h2>Эмоциональная устойчивость {100 - Math.round((this.state.ner * (100/75)),2)}%</h2>
 								<p align="center">
 									<img src={emo} width={400} height={300}/>
 								</p>
@@ -796,7 +796,7 @@ class App extends React.Component {
 					case 4:
 						return (
 							<div>
-								<h2>Практичность</h2>
+								<h2>Практичность {100 - Math.round((this.state.open * (100/75)),2)}%</h2>
 								<p align="center">
 									<img src={pr} width={400} height={300}/>
 								</p>
@@ -822,7 +822,7 @@ class App extends React.Component {
 					case 0:
 						return (
 							<div>
-								<h2>Экстраверсия </h2>
+								<h2>Экстраверсия {Math.round((this.state.ext*100)/10,2)}%</h2>
                                 <p align="center">
                                     <img src={extr} width={400} height={300}/>
                                 </p>
@@ -839,7 +839,7 @@ class App extends React.Component {
 
 					case 1:
 						return (
-							<div><h2>Привязанность</h2>
+							<div><h2>Привязанность {Math.round((this.state.agr*100)/10,2)}%</h2>
                                 <p align="center">
                                     <img src={agrt} width={400} height={300}/>
                                 </p>
@@ -855,7 +855,7 @@ class App extends React.Component {
 					case 2:
 						return (
 							<div>
-								<h2>Самоконтроль</h2>
+								<h2>Самоконтроль {Math.round((this.state.con*100)/10,2)}%</h2>
                                 <p align="center">
                                     <img src={sam} width={400} height={300}/>
                                 </p>
@@ -871,7 +871,7 @@ class App extends React.Component {
 					case 3:
 						return (
 							<div>
-								<h2>Эмоциональная неустойчивость</h2>
+								<h2>Эмоциональная неустойчивость {Math.round((this.state.ner*100)/10,2)}%</h2>
                                 <p align="center">
                                     <img src={notemo} width={400} height={300}/>
                                 </p>
@@ -887,7 +887,7 @@ class App extends React.Component {
 					case 4:
 						return (
 							<div>
-								<h2>Экспрессивность</h2>
+								<h2>Экспрессивность {Math.round((this.state.open*100)/10,2)}%</h2>
                                 <p align="center">
                                     <img src={exp} width={400} height={300}/>
                                 </p>
@@ -910,7 +910,7 @@ class App extends React.Component {
 					case 0:
 						return(
 							<div>
-								<h2>Интроверсия</h2>
+								<h2>Интроверсия {100 - Math.round((this.state.ext*100)/10,2)}%</h2>
 								<p align="center">
 									<img src={entr} width={400} height={300}/>
 								</p>
@@ -925,7 +925,7 @@ class App extends React.Component {
 						);
 					case 1:
 						return(
-							<div><h2>Обособленность</h2>
+							<div><h2>Обособленность {100 - Math.round((this.state.agr*100)/10,2)}%</h2>
 								<p align="center">
 									<img src={ob} width={400} height={300}/>
 								</p>
@@ -940,7 +940,7 @@ class App extends React.Component {
 					case 2:
 						return(
 							<div>
-							<h2>Импульсивность</h2>
+							<h2>Импульсивность {100 - Math.round((this.state.con*100)/10,2)}%</h2>
 								<p align="center">
 									<img src={impuls} width={400} height={300}/>
 								</p>
@@ -956,7 +956,7 @@ class App extends React.Component {
 					case 3:
 						return(
 							<div>
-								<h2>Эмоциональная устойчивость</h2>
+								<h2>Эмоциональная устойчивость {100 - Math.round((this.state.ner*100)/10,2)}%</h2>
 								<p align="center">
 									<img src={emo} width={400} height={300}/>
 								</p>
@@ -971,7 +971,7 @@ class App extends React.Component {
 					case 4:
 						return(
 							<div>
-							<h2>Практичность</h2>
+							<h2>Практичность {100 - Math.round((this.state.open*100)/10,2)}%</h2>
 								<p align="center">
 									<img src={pr} width={400} height={300}/>
 								</p>
