@@ -58,11 +58,11 @@ class CompassCenter extends React.Component {
 class CenterLabel extends React.Component {
 	render() {
 		const { datum, active, color, origin } = this.props;
-		const text = [ `${datum.x}`, `${datum.y}` ];
+		const text = [ `${datum.y}` ];
 		const baseStyle = { fill: color.highlight, textAnchor: "middle" };
 		const style = [
 			{ ...baseStyle, fontSize: 18, fontWeight: "bold" },
-			{ ...baseStyle, fontSize: 12 }
+			{ ...baseStyle, fontSize: 18}
 		];
 
 		return active ?
@@ -540,8 +540,8 @@ class App extends React.Component {
 		const text = [ "data.name", "data.count" ];
 		const baseStyle = { fill: red.highlight, textAnchor: "middle" };
 		const style = [
-			{ ...baseStyle, fontSize: 18, fontWeight: "bold" },
-			{ ...baseStyle, fontSize: 12 }
+			{ ...baseStyle, fontSize: 10, fontWeight: "bold" },
+			{ ...baseStyle, fontSize: 10 }
 		];
 		const divStyle = {
 			margin: 3
@@ -582,13 +582,13 @@ class App extends React.Component {
 							  }]}
 				>
 					{
-						["ext", "agr", "con", "ner", "open"].map((d, i) => {
+						["Экстраверсия", "Доброжелательность", "Добросовестность", "Нейротизм", "Открытость опыту"].map((d, i) => {
 							return (
 								<VictoryPolarAxis dependentAxis
 												  key={i}
 												  label={d}
 												  labelPlacement="perpendicular"
-												  style={{tickLabels: {fill: "none"}}}
+												  style={{tickLabels: {fill: "none"}, fontSize: 10}}
 												  axisValue={d}
 								/>
 							);
@@ -598,16 +598,16 @@ class App extends React.Component {
 					<VictoryBar
 						style={{ data: {
 								fill: ({ active }) => active ? orange.highlight : orange.base,
-								width: 25
+								width: 25,
+								fontSize: 10
 							} }}
 						data={[
-							{x: "ext", y: this.state.ext},
-							{x: "agr", y: this.state.agr},
-							{x: "con", y: this.state.con},
-							{x: "ner", y: this.state.ner},
-							{x: "open", y: this.state.open}
+							{x: "Экстраверсия", y: this.state.ext},
+							{x: "Доброжелательность", y: this.state.agr},
+							{x: "Добросовестность", y: this.state.con},
+							{x: "Нейротизм", y: this.state.ner},
+							{x: "Открытость опыту", y: this.state.open}
 						]}
-
 						labels={() => ""}
 						labelComponent={<CenterLabel color={red}/>}
 					/>
