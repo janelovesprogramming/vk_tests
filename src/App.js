@@ -24,9 +24,9 @@ const directions = {
 	180: "W", 225: "SW", 270: "S", 315: "SE"
 };
 
-const orange = { base: "blue", highlight: "darkblue" };
+const orange = { base: "#1273de", highlight: "#0d47a1" };
 
-const red = { base: "darkblue", highlight: "darkblue" };
+const red = { base: "#0d47a1", highlight: "#0d47a1" };
 
 const innerRadius = 30;
 
@@ -50,7 +50,7 @@ class CompassCenter extends React.Component {
 class CenterLabel extends React.Component {
 	render() {
 		const { datum, active, color, origin } = this.props;
-		const text = [ `${directions[datum._x]}`, `${Math.round(datum._y1)}` ];
+		const text = [ `${datum.x}`, `${datum.y}` ];
 		const baseStyle = { fill: color.highlight, textAnchor: "middle" };
 		const style = [
 			{ ...baseStyle, fontSize: 18, fontWeight: "bold" },
@@ -60,7 +60,7 @@ class CenterLabel extends React.Component {
 		return active ?
 			(
 				<VictoryLabel
-					text={text} style={style} x={100} y={100} renderInPortal
+					text={text} style={style} x={200} y={155} renderInPortal
 				/>
 			) : null;
 	}
@@ -138,6 +138,7 @@ class App extends React.Component {
 			tasks: newTasks
 		})
 	}
+
 
 	get tasks() {
 
@@ -524,34 +525,25 @@ class App extends React.Component {
 				name: 'Открытость опыту', count: this.state.open,
 			},
 		];
-
+		const { datum, active, color } = this.props;
+		const text = [ "data.name", "data.count" ];
+		const baseStyle = { fill: red.highlight, textAnchor: "middle" };
+		const style = [
+			{ ...baseStyle, fontSize: 18, fontWeight: "bold" },
+			{ ...baseStyle, fontSize: 12 }
+		];
 		const divStyle = {
 			margin: 3
 		}
-
+		const h2Style = {
+			margin: 10
+		}
 		return (
 			<div>
 				<PanelHeader>
 					Тесты
 				</PanelHeader>
-				<ComposedChart
-					layout="vertical"
-					width={400}
-					height={300}
-					data={data}
-					margin={{
-						top: 40, right: 40, bottom: 40, left: 80,
-					}}
-					fontSize={12}
-				>
-					<CartesianGrid stroke="#f5f5f5"/>
-					<XAxis type="number"/>
-					<YAxis dataKey="name" type="category"/>
-					<Tooltip/>
-					<Legend/>
-					<Bar dataKey="count" barSize={25} fill="#4169E1"/>
-				</ComposedChart>
-
+				
 				<VictoryChart polar
 							  animate={{ duration: 500, onLoad: { duration: 500 } }}
 							  theme={VictoryTheme.material}
@@ -604,8 +596,12 @@ class App extends React.Component {
 							{x: "ner", y: this.state.ner},
 							{x: "open", y: this.state.open}
 						]}
+
 						labels={() => ""}
+						labelComponent={<CenterLabel color={red}/>}
 					/>
+
+
 
 					<CompassCenter/>
 				</VictoryChart>
@@ -619,7 +615,7 @@ class App extends React.Component {
 
 			</div>
 
-		);
+		)
 	}
 
 	renderSwitch(k) {
