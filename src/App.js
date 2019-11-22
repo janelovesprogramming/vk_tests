@@ -24,7 +24,7 @@ import extr from '../src/api/extr.png';
 import entr from '../src/api/entr.jpg';
 import agrt from '../src/api/agrt.png';
 import nert from '../src/api/nert.png';
-import opent from '../src/api/opent.png';
+import rrr from '../src/api/rrr.jpg';
 
 
 const orange = { base: "#1273de", highlight: "#0d47a1" };
@@ -621,7 +621,7 @@ class App extends React.Component {
 
 					<CompassCenter/>
 				</VictoryChart>
-
+                <img src={rrr} height={200}/>
 				<div>
 					{this.renderSwitch(0)}
 					{this.renderSwitch(1)}
