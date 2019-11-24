@@ -34,19 +34,25 @@ class Tasks extends React.Component {
                                 onRemove={() => deleteTask(task.id)}
 
                             >
+                                <div>
                                 <Header><b>{task.name}</b></Header>
                                 <Gallery
-                                    slideWidth="90%"
-                                    style={{ height: 150 }}
+                                    slideWidth="40%"
+                                    style={{ height: 250 }}
                                 >
                                     <img src={task.image_back}/>
+                                    <div>
+                                        <Div>{task.text}</Div>
+                                        <div align="left"><Button onClick={()=> {
+                                            setCurrentTaskId(task.id)
+                                            router.navigate('task', { id : task.id })
+                                        }
+                                        }>Начать тест</Button></div>
+                                    </div>
                                 </Gallery>
-                                <Div>{task.text}</Div>
-                                <div align="center"><Button onClick={()=> {
-                                    setCurrentTaskId(task.id)
-                                    router.navigate('task', { id : task.id })
-                                }
-                                }>Начать тест</Button></div>
+                                </div>
+
+
 
                             </Cell>
                         ))
