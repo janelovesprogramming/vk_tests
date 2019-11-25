@@ -56,7 +56,7 @@ class Tasks extends React.Component {
                                             setCurrentTaskId(task.id)
                                             router.navigate('task', { id : task.id })
                                         }
-                                        }>Начать тест</Button></div>
+                                        }>{task.id===1?"Начать короткий тест":"Начать длинный тест"}</Button></div>
                                     </div>
                                 </div>
 

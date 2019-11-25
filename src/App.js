@@ -1,6 +1,6 @@
 import React from "react";
 
-import { VictoryChart, VictoryPolarAxis, VictoryTheme, VictoryBar, VictoryLabel} from "victory";
+import { VictoryChart, VictoryPolarAxis, VictoryTheme, VictoryBar, VictoryLabel, VictoryGroup} from "victory";
 import {
 	View,
 	Panel,
@@ -596,11 +596,6 @@ class App extends React.Component {
 					}
 
 					<VictoryBar
-						style={{ data: {
-								fill: ({ active }) => active ? orange.highlight : orange.base,
-								width: 25,
-								fontSize: 10
-							} }}
 						data={[
 							{x: "Экстраверсия", y: this.state.currentTaskId === 1 ? Math.round((this.state.ext*100)/10,2): Math.round((this.state.ext*100)/75,2)},
 							{x: "Доброжелательность", y: this.state.currentTaskId === 1 ? Math.round((this.state.agr*100)/10,2): Math.round((this.state.agr*100)/75,2)},
@@ -608,9 +603,15 @@ class App extends React.Component {
 							{x: "Нейротизм", y: this.state.currentTaskId === 1 ? Math.round((this.state.ner*100)/10,2): Math.round((this.state.ner*100)/75,2)},
 							{x: "Открытость опыту", y: this.state.currentTaskId === 1 ? Math.round((this.state.open*100)/10,2): Math.round((this.state.open*100)/75,2)}
 						]}
+						style={{ data: {
+								fill: ({ active }) => active ? orange.highlight : orange.base,
+								width: 25,
+								fontSize: 10
+							} }}
 						labels={() => ""}
 						labelComponent={<CenterLabel color={red}/>}
 					/>
+				
 
 
 
@@ -817,7 +818,7 @@ class App extends React.Component {
 		}
 		else
 		{
-			if (this.state.big5mas[k] >= 8) {
+			if (this.state.big5mas[k] >= 7) {
 				switch (k) {
 					case 0:
 						return (
