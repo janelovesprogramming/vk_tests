@@ -373,7 +373,7 @@ class App extends React.Component {
 							<Radio name="radio" value="2" checked={this.state.val === "2"}
 								   onChange={this.handleAnswerSelected}>Не согласен</Radio>
 							<Radio name="radio" value="1" checked={this.state.val === "1"}
-								   onChange={this.handleAnswerSelected}>Поолностью не согласен</Radio>
+								   onChange={this.handleAnswerSelected}>Полностью не согласен</Radio>
 						</p>
 					</div>
 				</Panel>
@@ -405,7 +405,7 @@ class App extends React.Component {
 							<Radio name="radio" value="2" checked={this.state.val === "2"}
 								   onChange={this.handleAnswerSelected}>Не согласен</Radio>
 							<Radio name="radio" value="1" checked={this.state.val === "1"}
-								   onChange={this.handleAnswerSelected}>Поолностью не согласен</Radio>
+								   onChange={this.handleAnswerSelected}>Полностью не согласен</Radio>
 						</p>
 					</div>
 				</Panel>
@@ -418,7 +418,7 @@ class App extends React.Component {
 
 	renderResult() {
 		if (this.state.id_user !== '') {
-			
+
 			const firebase = require("firebase");
 
 			require("firebase/firestore");
@@ -441,6 +441,9 @@ class App extends React.Component {
 			const db = firebase.firestore();
 
 
+			db.clearPersistence().catch(error => {
+				console.error('Could not enable persistence:', error.code);
+			});
 
 			if (this.state.currentTaskId === 1) {
 					db.collection('tests').add({
