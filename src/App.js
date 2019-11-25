@@ -414,11 +414,11 @@ class App extends React.Component {
 		if (this.state.id_user !== '') {
 
 			alert(this.state.id_user);
-			/*
+
 			const firebase = require("firebase");
 
 			require("firebase/firestore");
-
+			/*
 			var config = {
 				apiKey: "AIzaSyBDhnNJsSVzBM0NHjpsDBVssdW7282FMys",
 				authDomain: "jannneee-github-io-446aa.firebaseapp.com",
@@ -527,163 +527,183 @@ class App extends React.Component {
 					q75: this.state.r[74],
 				});
 			}
-		}
-		*/
-		const data = [
-			{
-				name: 'Экстраверсия', count: this.state.ext,
-			},
-			{
-				name: 'Доброжелательность', count: this.state.agr,
-			},
-			{
-				name: 'Добросовестность', count: this.state.con,
-			},
-			{
-				name: 'Нейротизм', count: this.state.ner,
-			},
-			{
-				name: 'Открытость опыту', count: this.state.open,
-			},
-		];
-		const { datum, active, color } = this.props;
-		const text = [ "data.name", "data.count" ];
-		const baseStyle = { fill: red.highlight, textAnchor: "middle" };
-		const style = [
-			{ ...baseStyle, fontSize: 10, fontWeight: "bold" },
-			{ ...baseStyle, fontSize: 10 }
-		];
-		const divStyle = {
-			margin: 3
-		}
-		const h2Style = {
-			margin: 10
-		}
-		let {
-			router,
-		} = this.props
-		return (
-			<div>
-
-				<PanelHeader
-
-					left={<PanelHeaderBack onClick={() => router.navigate('tasks') && this.setState({
-						tasks: [
-							{
-								id: 1,
-								name: 'Тест по Большой пятерке (10 вопросов)',
-								text: 'Большая пятерка – психологическая модель, описывающая структуру личности человека посредством пяти черт:  «нейротизм», «экстраверсия», «открытость опыту», «доброжелательность», «добросовестность».',
-								image_back: people
-
-							},
-							{
-								id: 2,
-								name: 'Тест по Большой пятерке (75 вопросов)',
-								text: 'Большая пятрека – психологическая модель, описывающая структуру личности человека посредством пяти черт: «нейротизм», «экстраверсия», «открытость опыту», «доброжелательность», «добросовестность».',
-								image_back: peo
-							}
-
-						],
-						search: '',
-						counter: 0,
-						questionId: 1,
-						question: '',
-						answerOptions: [],
-						answer: '',
-						answersCount: {},
-						result: '',
-						currentTaskId: null,
-						r: [],
-						checked: false,
-						val: '',
-						clicked: false,
-						ext: 0,
-						agr: 0,
-						con: 0,
-						ner: 0,
-						open: 0,
-						cur: 0,
-						big5mas: [],
-
-					} )} />}>
-					Тесты
-
-				</PanelHeader>
-				<h2 align="center">Ваш психологический профиль</h2>
-				<VictoryChart polar
-							  animate={{ duration: 500, onLoad: { duration: 500 } }}
-							  theme={VictoryTheme.material}
-							  width={400}
-							  height={300}
-							  innerRadius={innerRadius}
-							  domainPadding={{ y: 10 }}
-							  events={[{
-								  childName: "all",
-								  target: "data",
-								  eventHandlers: {
-									  onMouseOver: () => {
-										  return [
-											  { target: "labels", mutation: () => ({ active: true }) },
-											  { target: "data", mutation: () => ({ active: true }) }
-										  ];
-									  },
-									  onMouseOut: () => {
-										  return [
-											  { target: "labels", mutation: () => ({ active: false }) },
-											  { target: "data", mutation: () => ({ active: false }) }
-										  ];
-									  }
-								  }
-							  }]}
-				>
-					{
-						["Экстраверсия", "Доброжелательность", "Добросовестность", "Нейротизм", "Открытость опыту"].map((d, i) => {
-							return (
-								<VictoryPolarAxis dependentAxis
-												  key={i}
-												  label={d}
-												  labelPlacement="perpendicular"
-												  style={{tickLabels: {fill: "none"}, fontSize: 10}}
-												  axisValue={d}
-								/>
-							);
-						})
-					}
-
-					<VictoryBar
-						data={[
-							{x: "Экстраверсия", y: this.state.currentTaskId === 1 ? Math.round((this.state.ext*100)/10,2): Math.round((this.state.ext*100)/75,2), fill:"#2196f3"},
-							{x: "Доброжелательность", y: this.state.currentTaskId === 1 ? Math.round((this.state.agr*100)/10,2): Math.round((this.state.agr*100)/75,2), fill:"#03a9f4"},
-							{x: "Добросовестность", y: this.state.currentTaskId === 1 ? Math.round((this.state.con*100)/10,2): Math.round((this.state.con*100)/75,2), fill:"#00bcd4"},
-							{x: "Нейротизм", y: this.state.currentTaskId === 1 ? Math.round((this.state.ner*100)/10,2): Math.round((this.state.ner*100)/75,2), fill:"#009688"},
-							{x: "Открытость опыту", y: this.state.currentTaskId === 1 ? Math.round((this.state.open*100)/10,2): Math.round((this.state.open*100)/75,2), fill:"#4caf50"}
-						]}
-						style={{ data: {
-								fill: ({ active, datum }) => active ? orange.highlight : datum.fill,
-								width: 25,
-								fontSize: 10
-							} }}
-						labels={() => ""}
-						labelComponent={<CenterLabel color={red}/>}
-					/>
-
-
-
-
-					<CompassCenter/>
-				</VictoryChart>
-
+		} */
+			const data = [
+				{
+					name: 'Экстраверсия', count: this.state.ext,
+				},
+				{
+					name: 'Доброжелательность', count: this.state.agr,
+				},
+				{
+					name: 'Добросовестность', count: this.state.con,
+				},
+				{
+					name: 'Нейротизм', count: this.state.ner,
+				},
+				{
+					name: 'Открытость опыту', count: this.state.open,
+				},
+			];
+			const {datum, active, color} = this.props;
+			const text = ["data.name", "data.count"];
+			const baseStyle = {fill: red.highlight, textAnchor: "middle"};
+			const style = [
+				{...baseStyle, fontSize: 10, fontWeight: "bold"},
+				{...baseStyle, fontSize: 10}
+			];
+			const divStyle = {
+				margin: 3
+			}
+			const h2Style = {
+				margin: 10
+			}
+			let {
+				router,
+			} = this.props
+			return (
 				<div>
-					{this.renderSwitch(0)}
-					{this.renderSwitch(1)}
-					{this.renderSwitch(2)}
-					{this.renderSwitch(3)}
-					{this.renderSwitch(4)}
+
+					<PanelHeader
+
+						left={<PanelHeaderBack onClick={() => router.navigate('tasks') && this.setState({
+							tasks: [
+								{
+									id: 1,
+									name: 'Тест по Большой пятерке (10 вопросов)',
+									text: 'Большая пятерка – психологическая модель, описывающая структуру личности человека посредством пяти черт:  «нейротизм», «экстраверсия», «открытость опыту», «доброжелательность», «добросовестность».',
+									image_back: people
+
+								},
+								{
+									id: 2,
+									name: 'Тест по Большой пятерке (75 вопросов)',
+									text: 'Большая пятрека – психологическая модель, описывающая структуру личности человека посредством пяти черт: «нейротизм», «экстраверсия», «открытость опыту», «доброжелательность», «добросовестность».',
+									image_back: peo
+								}
+
+							],
+							search: '',
+							counter: 0,
+							questionId: 1,
+							question: '',
+							answerOptions: [],
+							answer: '',
+							answersCount: {},
+							result: '',
+							currentTaskId: null,
+							r: [],
+							checked: false,
+							val: '',
+							clicked: false,
+							ext: 0,
+							agr: 0,
+							con: 0,
+							ner: 0,
+							open: 0,
+							cur: 0,
+							big5mas: [],
+
+						})}/>}>
+						Тесты
+
+					</PanelHeader>
+					<h2 align="center">Ваш психологический профиль</h2>
+					<VictoryChart polar
+								  animate={{duration: 500, onLoad: {duration: 500}}}
+								  theme={VictoryTheme.material}
+								  width={400}
+								  height={300}
+								  innerRadius={innerRadius}
+								  domainPadding={{y: 10}}
+								  events={[{
+									  childName: "all",
+									  target: "data",
+									  eventHandlers: {
+										  onMouseOver: () => {
+											  return [
+												  {target: "labels", mutation: () => ({active: true})},
+												  {target: "data", mutation: () => ({active: true})}
+											  ];
+										  },
+										  onMouseOut: () => {
+											  return [
+												  {target: "labels", mutation: () => ({active: false})},
+												  {target: "data", mutation: () => ({active: false})}
+											  ];
+										  }
+									  }
+								  }]}
+					>
+						{
+							["Экстраверсия", "Доброжелательность", "Добросовестность", "Нейротизм", "Открытость опыту"].map((d, i) => {
+								return (
+									<VictoryPolarAxis dependentAxis
+													  key={i}
+													  label={d}
+													  labelPlacement="perpendicular"
+													  style={{tickLabels: {fill: "none"}, fontSize: 10}}
+													  axisValue={d}
+									/>
+								);
+							})
+						}
+
+						<VictoryBar
+							data={[
+								{
+									x: "Экстраверсия",
+									y: this.state.currentTaskId === 1 ? Math.round((this.state.ext * 100) / 10, 2) : Math.round((this.state.ext * 100) / 75, 2),
+									fill: "#2196f3"
+								},
+								{
+									x: "Доброжелательность",
+									y: this.state.currentTaskId === 1 ? Math.round((this.state.agr * 100) / 10, 2) : Math.round((this.state.agr * 100) / 75, 2),
+									fill: "#03a9f4"
+								},
+								{
+									x: "Добросовестность",
+									y: this.state.currentTaskId === 1 ? Math.round((this.state.con * 100) / 10, 2) : Math.round((this.state.con * 100) / 75, 2),
+									fill: "#00bcd4"
+								},
+								{
+									x: "Нейротизм",
+									y: this.state.currentTaskId === 1 ? Math.round((this.state.ner * 100) / 10, 2) : Math.round((this.state.ner * 100) / 75, 2),
+									fill: "#009688"
+								},
+								{
+									x: "Открытость опыту",
+									y: this.state.currentTaskId === 1 ? Math.round((this.state.open * 100) / 10, 2) : Math.round((this.state.open * 100) / 75, 2),
+									fill: "#4caf50"
+								}
+							]}
+							style={{
+								data: {
+									fill: ({active, datum}) => active ? orange.highlight : datum.fill,
+									width: 25,
+									fontSize: 10
+								}
+							}}
+							labels={() => ""}
+							labelComponent={<CenterLabel color={red}/>}
+						/>
+
+
+						<CompassCenter/>
+					</VictoryChart>
+
+					<div>
+						{this.renderSwitch(0)}
+						{this.renderSwitch(1)}
+						{this.renderSwitch(2)}
+						{this.renderSwitch(3)}
+						{this.renderSwitch(4)}
+					</div>
+
 				</div>
 
-			</div>
-
-		)
+			)
+		}
 	}
 
 	renderSwitch(k) {
