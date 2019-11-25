@@ -412,6 +412,7 @@ class App extends React.Component {
 
 	renderResult() {
 		if (this.state.id_user !== '') {
+			alert(this.state.id_user);
 			const firebase = require("firebase");
 
 			require("firebase/firestore");
