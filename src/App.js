@@ -8,7 +8,9 @@ import {
 	FixedLayout,
 	Root,
 	Radio,
-	PanelHeader
+	PanelHeader,
+	HeaderButton,
+	PanelHeaderBack
 } from '@vkontakte/vkui'
 import '@vkontakte/vkui/dist/vkui.css'
 import Tasks from './components/Tasks'
@@ -25,6 +27,7 @@ import exp from '../src/api/expressiya3.jpg';
 import agrt from '../src/api/inx960x640.jpg';
 import sam from '../src/api/self_contr.jpg';
 import notemo from '../src/api/Unknown.jpg';
+import ClearCache from 'react-clear-cache';
 
 import entr from '../src/api/entr.jpg';
 import impuls from '../src/api/145470.jpg';
@@ -122,6 +125,7 @@ class App extends React.Component {
 		}
 
 		this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
+
 	}
 
 	onChangeSearch = (search) => {
@@ -339,6 +343,8 @@ class App extends React.Component {
 
 		if (this.state.currentTaskId === 1) {
 			return (
+
+
 				<Panel id='task'>
 					<div style={divStyle}>
 						<Quiz
@@ -365,6 +371,7 @@ class App extends React.Component {
 						</p>
 					</div>
 				</Panel>
+
 
 
 			);
@@ -549,10 +556,55 @@ class App extends React.Component {
 		const h2Style = {
 			margin: 10
 		}
+		let {
+			router,
+		} = this.props
 		return (
 			<div>
-				<PanelHeader>
+
+				<PanelHeader
+
+					left={<PanelHeaderBack onClick={() => router.navigate('tasks') && this.setState({
+						tasks: [
+							{
+								id: 1,
+								name: 'Тест по Большой пятерке (10 вопросов)',
+								text: 'Большая пятерка – психологическая модель, описывающая структуру личности человека посредством пяти черт:  «нейротизм», «экстраверсия», «открытость опыту», «доброжелательность», «добросовестность».',
+								image_back: people
+
+							},
+							{
+								id: 2,
+								name: 'Тест по Большой пятерке (75 вопросов)',
+								text: 'Большая пятрека – психологическая модель, описывающая структуру личности человека посредством пяти черт: «нейротизм», «экстраверсия», «открытость опыту», «доброжелательность», «добросовестность».',
+								image_back: peo
+							}
+
+						],
+						search: '',
+						counter: 0,
+						questionId: 1,
+						question: '',
+						answerOptions: [],
+						answer: '',
+						answersCount: {},
+						result: '',
+
+						r: [],
+						checked: false,
+						val: '',
+						clicked: false,
+						ext: 0,
+						agr: 0,
+						con: 0,
+						ner: 0,
+						open: 0,
+						cur: 0,
+						big5mas: [],
+
+					} )} />}>
 					Тесты
+
 				</PanelHeader>
 				<h2 align="center">Ваш психологический профиль</h2>
 				<VictoryChart polar
@@ -1106,7 +1158,7 @@ class App extends React.Component {
 					<Panel id="edit" theme="white">
 						<EditTask 
 							router={router}
-							task={this.task[0]}
+							task={this.task[1]}
 							editTask={this.editTask}
 						/>
 					</Panel>
