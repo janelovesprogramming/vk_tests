@@ -32,9 +32,9 @@ import emo from '../src/api/Unknown1.jpg';
 import ob from '../src/api/depositphotos_43962069-stock-photo-suspicious-man.jpg';
 import pr from '../src/api/0ff07ec3519ac00d48af86d150a59bc8.jpg';
 
-const orange = { base: "#1273de", highlight: "#0d47a1" };
+const orange = { base: "#8ed1fc", highlight: "#0693e3" };
 
-const red = { base: "#0d47a1", highlight: "#0d47a1" };
+const red = { base: "#0693e3", highlight: "#0693e3" };
 
 const innerRadius = 30;
 
@@ -597,21 +597,21 @@ class App extends React.Component {
 
 					<VictoryBar
 						data={[
-							{x: "Экстраверсия", y: this.state.currentTaskId === 1 ? Math.round((this.state.ext*100)/10,2): Math.round((this.state.ext*100)/75,2)},
-							{x: "Доброжелательность", y: this.state.currentTaskId === 1 ? Math.round((this.state.agr*100)/10,2): Math.round((this.state.agr*100)/75,2)},
-							{x: "Добросовестность", y: this.state.currentTaskId === 1 ? Math.round((this.state.con*100)/10,2): Math.round((this.state.con*100)/75,2)},
-							{x: "Нейротизм", y: this.state.currentTaskId === 1 ? Math.round((this.state.ner*100)/10,2): Math.round((this.state.ner*100)/75,2)},
-							{x: "Открытость опыту", y: this.state.currentTaskId === 1 ? Math.round((this.state.open*100)/10,2): Math.round((this.state.open*100)/75,2)}
+							{x: "Экстраверсия", y: this.state.currentTaskId === 1 ? Math.round((this.state.ext*100)/10,2): Math.round((this.state.ext*100)/75,2), fill:"#2196f3"},
+							{x: "Доброжелательность", y: this.state.currentTaskId === 1 ? Math.round((this.state.agr*100)/10,2): Math.round((this.state.agr*100)/75,2), fill:"#03a9f4"},
+							{x: "Добросовестность", y: this.state.currentTaskId === 1 ? Math.round((this.state.con*100)/10,2): Math.round((this.state.con*100)/75,2), fill:"#00bcd4"},
+							{x: "Нейротизм", y: this.state.currentTaskId === 1 ? Math.round((this.state.ner*100)/10,2): Math.round((this.state.ner*100)/75,2), fill:"#009688"},
+							{x: "Открытость опыту", y: this.state.currentTaskId === 1 ? Math.round((this.state.open*100)/10,2): Math.round((this.state.open*100)/75,2), fill:"#4caf50"}
 						]}
 						style={{ data: {
-								fill: ({ active }) => active ? orange.highlight : orange.base,
+								fill: ({ active, datum }) => active ? orange.highlight : datum.fill,
 								width: 25,
 								fontSize: 10
 							} }}
 						labels={() => ""}
 						labelComponent={<CenterLabel color={red}/>}
 					/>
-				
+
 
 
 
