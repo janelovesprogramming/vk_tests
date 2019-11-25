@@ -412,7 +412,9 @@ class App extends React.Component {
 
 	renderResult() {
 		if (this.state.id_user !== '') {
+
 			alert(this.state.id_user);
+			/*
 			const firebase = require("firebase");
 
 			require("firebase/firestore");
@@ -526,7 +528,7 @@ class App extends React.Component {
 				});
 			}
 		}
-
+		*/
 		const data = [
 			{
 				name: 'Экстраверсия', count: this.state.ext,
