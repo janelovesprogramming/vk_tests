@@ -15,7 +15,14 @@ class Tasks extends React.Component {
         } = this.props
 
         const osname = platform()
-
+        const divStyle = {
+            display: "inline-block",
+            boxSizing: "border-box"
+        }
+        const rovStyle = {
+            display: "inline-block",
+            boxSizing: "border-box"
+        }
 		return (
 			<div>
                 <PanelHeader
@@ -37,19 +44,20 @@ class Tasks extends React.Component {
                                 <div>
                                 <Header><b>{task.name}</b></Header>
                                 <Gallery
-                                    slideWidth="40%"
-                                    style={{ height: 250 }}
+                                    slideWidth="90%"
+                                    style={{ height: 150 }}
                                 >
                                     <img src={task.image_back}/>
+
+                                </Gallery>
                                     <div>
                                         <Div>{task.text}</Div>
-                                        <div align="left"><Button onClick={()=> {
+                                        <div align="center"><Button onClick={()=> {
                                             setCurrentTaskId(task.id)
                                             router.navigate('task', { id : task.id })
                                         }
                                         }>Начать тест</Button></div>
                                     </div>
-                                </Gallery>
                                 </div>
 
 

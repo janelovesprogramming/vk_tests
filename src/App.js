@@ -18,8 +18,8 @@ import {ComposedChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,} from 
 import { RouteNode } from 'react-router5'
 import connect from '@vkontakte/vk-connect';
 import Quiz from './components/Quiz';
-import peo from '../src/api/peo.jpg';
-import people from '../src/api/people.jpg';
+import peo from '../src/api/peo.png';
+import people from '../src/api/people.png';
 import extr from '../src/api/ekstravert.jpg';
 import exp from '../src/api/expressiya3.jpg';
 import agrt from '../src/api/inx960x640.jpg';
@@ -58,7 +58,7 @@ class CompassCenter extends React.Component {
 class CenterLabel extends React.Component {
 	render() {
 		const { datum, active, color, origin } = this.props;
-		const text = [ `${datum.y}` ];
+		const text = [ `${datum.y}%` ];
 		const baseStyle = { fill: color.highlight, textAnchor: "middle" };
 		const style = [
 			{ ...baseStyle, fontSize: 18, fontWeight: "bold" },
@@ -68,7 +68,7 @@ class CenterLabel extends React.Component {
 		return active ?
 			(
 				<VictoryLabel
-					text={text} style={style} x={200} y={155} renderInPortal
+					text={text} style={style} x={205} y={150} renderInPortal
 				/>
 			) : null;
 	}
@@ -83,14 +83,14 @@ class App extends React.Component {
 				{
 					id: 1,
 					name: 'Тест по Большой пятерке (10 вопросов)',
-					text: 'Большая пятерка – психологическая модель, описывающая структуру личности человека посредством пяти черт:  «нейротизм», «экстраверсия», «открытость опыту», «сдоброжелательность», «добросовестность»',
-					image_back: peo
+					text: 'Большая пятерка – психологическая модель, описывающая структуру личности человека посредством пяти черт:  «нейротизм», «экстраверсия», «открытость опыту», «доброжелательность», «добросовестность».',
+					image_back: people
 
 				},
 				{
 					id: 2,
 					name: 'Тест по Большой пятерке (75 вопросов)',
-					text: 'Большая пятрека – психологическая модель, описывающая структуру личности человека посредством пяти черт: «нейротизм», «экстраверсия», «открытость опыту», «сдоброжелательность», «добросовестность»',
+					text: 'Большая пятрека – психологическая модель, описывающая структуру личности человека посредством пяти черт: «нейротизм», «экстраверсия», «открытость опыту», «доброжелательность», «добросовестность».',
 					image_back: peo
 				}
 
@@ -602,11 +602,11 @@ class App extends React.Component {
 								fontSize: 10
 							} }}
 						data={[
-							{x: "Экстраверсия", y: this.state.ext},
-							{x: "Доброжелательность", y: this.state.agr},
-							{x: "Добросовестность", y: this.state.con},
-							{x: "Нейротизм", y: this.state.ner},
-							{x: "Открытость опыту", y: this.state.open}
+							{x: "Экстраверсия", y: this.state.currentTaskId === 1 ? Math.round((this.state.ext*100)/10,2): Math.round((this.state.ext*100)/75,2)},
+							{x: "Доброжелательность", y: this.state.currentTaskId === 1 ? Math.round((this.state.agr*100)/10,2): Math.round((this.state.agr*100)/75,2)},
+							{x: "Добросовестность", y: this.state.currentTaskId === 1 ? Math.round((this.state.con*100)/10,2): Math.round((this.state.con*100)/75,2)},
+							{x: "Нейротизм", y: this.state.currentTaskId === 1 ? Math.round((this.state.ner*100)/10,2): Math.round((this.state.ner*100)/75,2)},
+							{x: "Открытость опыту", y: this.state.currentTaskId === 1 ? Math.round((this.state.open*100)/10,2): Math.round((this.state.open*100)/75,2)}
 						]}
 						labels={() => ""}
 						labelComponent={<CenterLabel color={red}/>}
@@ -639,7 +639,7 @@ class App extends React.Component {
 
 		if (this.state.currentTaskId === 2) {
 
-			if (this.state.big5mas[k] > 51) {
+			if (this.state.big5mas[k] >= 51) {
 				switch (k) {
 					case 0:
 						return (
@@ -728,7 +728,7 @@ class App extends React.Component {
 				}
 
 			}
-			else if (this.state.big5mas[k] < 40)
+			else if (this.state.big5mas[k] <= 40)
 			{
 				switch (k) {
 					case 0:
@@ -817,7 +817,7 @@ class App extends React.Component {
 		}
 		else
 		{
-			if (this.state.big5mas[k] > 8) {
+			if (this.state.big5mas[k] >= 8) {
 				switch (k) {
 					case 0:
 						return (
@@ -904,7 +904,7 @@ class App extends React.Component {
 				}
 
 			}
-			else if(this.state.big5mas[k]<5)
+			else if(this.state.big5mas[k]<=5)
 			{
 				switch (k) {
 					case 0:
