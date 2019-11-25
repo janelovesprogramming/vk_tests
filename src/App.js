@@ -77,6 +77,7 @@ class CenterLabel extends React.Component {
 	}
 }
 
+
 class App extends React.Component {
 	constructor(props) {
 		super(props)
@@ -121,8 +122,13 @@ class App extends React.Component {
 			id_user: '',
 			cur: 0,
 			big5mas: [],
+			flag: false,
+
 
 		}
+
+
+
 
 		this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
 
@@ -414,11 +420,10 @@ class App extends React.Component {
 		if (this.state.id_user !== '') {
 
 			alert(this.state.id_user);
-
 			const firebase = require("firebase");
 
 			require("firebase/firestore");
-			/*
+
 			var config = {
 				apiKey: "AIzaSyBDhnNJsSVzBM0NHjpsDBVssdW7282FMys",
 				authDomain: "jannneee-github-io-446aa.firebaseapp.com",
@@ -430,11 +435,16 @@ class App extends React.Component {
 				measurementId: "G-ZZ3P9VFGZY"
 			};
 
-
-			firebase.initializeApp(config);
+			if(!this.state.flag) {
+				firebase.initializeApp(config);
+				this.state.flag = true;
+			}
 			const db = firebase.firestore();
+
+
+
 			if (this.state.currentTaskId === 1) {
-				db.collection('tests').add({
+					db.collection('tests').add({
 					id_user: this.state.id_user,
 					q1: this.state.r[0],
 					q2: this.state.r[1],
@@ -448,7 +458,7 @@ class App extends React.Component {
 					q10: this.state.r[9],
 				});
 			} else {
-				db.collection('longtest').add({
+					db.collection('longtest').add({
 					id_user: this.state.id_user,
 					q1: this.state.r[0],
 					q2: this.state.r[1],
@@ -527,7 +537,7 @@ class App extends React.Component {
 					q75: this.state.r[74],
 				});
 			}
-		} */
+		}
 			const data = [
 				{
 					name: 'Экстраверсия', count: this.state.ext,
@@ -704,7 +714,7 @@ class App extends React.Component {
 
 			)
 		}
-	}
+
 
 	renderSwitch(k) {
 		const divStyle = {
