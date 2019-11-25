@@ -589,7 +589,7 @@ class App extends React.Component {
 						answer: '',
 						answersCount: {},
 						result: '',
-
+						currentTaskId: null,
 						r: [],
 						checked: false,
 						val: '',
