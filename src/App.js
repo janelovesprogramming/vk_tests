@@ -10,9 +10,11 @@ import {
 	Radio,
 	PanelHeader,
 	HeaderButton,
-	PanelHeaderBack
+	PanelHeaderBack,
+	Button
 } from '@vkontakte/vkui'
 import '@vkontakte/vkui/dist/vkui.css'
+import VK, {Share, Post} from 'react-vk';
 import Tasks from './components/Tasks'
 import AddTask from './components/AddTask'
 import EditTask from './components/EditTask'
@@ -28,7 +30,9 @@ import agrt from '../src/api/inx960x640.jpg';
 import sam from '../src/api/self_contr.jpg';
 import notemo from '../src/api/Unknown.jpg';
 import ClearCache from 'react-clear-cache';
-
+import ScreenCapture from '../src/components/ScreenCapture'
+import html2canvas from 'html2canvas';
+import logo from '../src/api/Am7naMIL-zE-3.jpg';
 import entr from '../src/api/entr.jpg';
 import impuls from '../src/api/145470.jpg';
 import emo from '../src/api/Unknown1.jpg';
@@ -573,6 +577,7 @@ class App extends React.Component {
 			let {
 				router,
 			} = this.props
+
 			return (
 				<div>
 
@@ -622,6 +627,7 @@ class App extends React.Component {
 					</PanelHeader>
 					<h2 align="center">Ваш психологический профиль</h2>
 					<VictoryChart polar
+								  name = "capture"
 								  animate={{duration: 500, onLoad: {duration: 500}}}
 								  theme={VictoryTheme.material}
 								  width={400}
@@ -711,13 +717,27 @@ class App extends React.Component {
 						{this.renderSwitch(3)}
 						{this.renderSwitch(4)}
 					</div>
-
+					<div style={h2Style}>
+						<VK>
+							<Share shareOptions={{
+								url: 'https://vk.com/app7165780_142799641',
+								title: 'VK Tests',
+								image: {logo},
+							}} buttonOptions={{type: 'round',
+								text: 'Рассказать друзьям'}}
+							/>
+						</VK>
+					</div>
 				</div>
 
 			)
 		}
 
+	screen()
+	{
 
+
+	}
 	renderSwitch(k) {
 		const divStyle = {
 			margin: 3
