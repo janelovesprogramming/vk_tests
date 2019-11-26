@@ -723,6 +723,7 @@ class App extends React.Component {
 								url: 'https://vk.com/app7165780_142799641',
 								title: 'VK Tests',
 								image: {logo},
+								no_vk_links: 1,
 							}} buttonOptions={{type: 'round',
 								text: 'Рассказать друзьям'}}
 							/>
