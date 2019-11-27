@@ -32,7 +32,7 @@ import notemo from '../src/api/Unknown.jpg';
 import ClearCache from 'react-clear-cache';
 import ScreenCapture from '../src/components/ScreenCapture'
 import html2canvas from 'html2canvas';
-import logo from '../src/api/Am7naMIL-zE-3.jpg';
+import logo from '../src/api/s1200.jpg';
 import entr from '../src/api/entr.jpg';
 import impuls from '../src/api/145470.jpg';
 import emo from '../src/api/Unknown1.jpg';
@@ -91,14 +91,14 @@ class App extends React.Component {
 				{
 					id: 1,
 					name: 'Тест по Большой пятерке (10 вопросов)',
-					text: 'Большая пятерка – психологическая модель, описывающая структуру личности человека посредством пяти черт:  «нейротизм», «экстраверсия», «открытость опыту», «доброжелательность», «добросовестность».',
+					text: 'Экспресс-тест на 10 вопросов: узнай свой характер за 3 минуты',
 					image_back: people
 
 				},
 				{
 					id: 2,
 					name: 'Тест по Большой пятерке (75 вопросов)',
-					text: 'Большая пятрека – психологическая модель, описывающая структуру личности человека посредством пяти черт: «нейротизм», «экстраверсия», «открытость опыту», «доброжелательность», «добросовестность».',
+					text: 'Точный тест на 75 вопросов: узнай свой характер за 15 минут',
 					image_back: peo
 				}
 
@@ -572,7 +572,7 @@ class App extends React.Component {
 				margin: 3
 			}
 			const h2Style = {
-				margin: 10
+				margin: 20
 			}
 			let {
 				router,
@@ -721,10 +721,10 @@ class App extends React.Component {
 						<VK>
 							<Share shareOptions={{
 								url: 'https://vk.com/app7165780_142799641',
-								title: 'VK Tests',
-								image: {logo},
+								title: 'Узнай оценку своей личности по тесту BigFive',
+								image: 'http://mysite.com/mypic.jpg',
 								no_vk_links: 1,
-							}} buttonOptions={{type: 'round',
+							}} buttonOptions={{type: 'round_nocount',
 								text: 'Рассказать друзьям'}}
 							/>
 						</VK>
