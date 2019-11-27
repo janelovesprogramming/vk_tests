@@ -574,6 +574,12 @@ class App extends React.Component {
 			const h2Style = {
 				margin: 20
 			}
+			const hr = {
+				border: "none",
+				background: "blue",
+				color: "blue",
+				height: 2
+				}
 			let {
 				router,
 			} = this.props
@@ -717,7 +723,11 @@ class App extends React.Component {
 						{this.renderSwitch(3)}
 						{this.renderSwitch(4)}
 					</div>
-					<div style={h2Style}>
+					<div>
+					<hr style={hr}>
+					</hr>
+					</div>
+					<div align="center">
 						<VK>
 							<Share shareOptions={{
 								url: 'https://vk.com/app7165780_142799641',
@@ -725,10 +735,13 @@ class App extends React.Component {
 								image: 'http://mysite.com/mypic.jpg',
 								no_vk_links: 1,
 							}} buttonOptions={{type: 'round_nocount',
-								text: 'Рассказать друзьям'}}
+								text: 'Поделиться'}}
 							/>
 						</VK>
 					</div>
+				<div>
+					<p></p>
+				</div>
 				</div>
 
 			)
