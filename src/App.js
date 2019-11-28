@@ -569,10 +569,10 @@ class App extends React.Component {
 				{...baseStyle, fontSize: 10}
 			];
 			const divStyle = {
-				margin: 3
+				margin: 25
 			}
 			const h2Style = {
-				margin: 20
+				margin: 30
 			}
 			const hr = {
 				border: "none",
@@ -727,7 +727,7 @@ class App extends React.Component {
 					<hr style={hr}>
 					</hr>
 					</div>
-					<div align="center">
+					<div  style={divStyle} align="center">
 						<VK>
 							<Share shareOptions={{
 								url: 'https://vk.com/app7165780_142799641',
@@ -739,8 +739,8 @@ class App extends React.Component {
 							/>
 						</VK>
 					</div>
-				<div>
-					<p></p>
+				<div style={divStyle}>
+					<br/>
 				</div>
 				</div>
 
