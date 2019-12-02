@@ -13,8 +13,12 @@ import {
 	PanelHeaderBack,
 	Button
 } from '@vkontakte/vkui'
+import Pdf from "react-to-pdf";
 import '@vkontakte/vkui/dist/vkui.css'
 import VK, {Share, Post} from 'react-vk';
+
+
+
 import Tasks from './components/Tasks'
 import AddTask from './components/AddTask'
 import EditTask from './components/EditTask'
@@ -284,6 +288,7 @@ class App extends React.Component {
 
 			});
 		}
+
 
 	}
 
@@ -584,6 +589,8 @@ class App extends React.Component {
 				router,
 			} = this.props
 
+			const ref = React.createRef();
+
 			return (
 				<div>
 
@@ -632,6 +639,12 @@ class App extends React.Component {
 
 					</PanelHeader>
 					<h2 align="center">Ваш психологический профиль</h2>
+					<div style={h2Style} align="center">
+					<Pdf targetRef={ref} filename="big5results.pdf">
+						{({ toPdf }) => <Button onClick={toPdf} >Сохранить результат</Button>}
+					</Pdf>
+					</div>
+
 					<VictoryChart polar
 								  name = "capture"
 								  animate={{duration: 500, onLoad: {duration: 500}}}
@@ -715,7 +728,7 @@ class App extends React.Component {
 
 						<CompassCenter/>
 					</VictoryChart>
-
+					<div ref={ref}>
 					<div>
 						{this.renderSwitch(0)}
 						{this.renderSwitch(1)}
@@ -723,11 +736,13 @@ class App extends React.Component {
 						{this.renderSwitch(3)}
 						{this.renderSwitch(4)}
 					</div>
+					</div>
 					<div>
 					<hr style={hr}>
 					</hr>
 					</div>
 					<div  style={divStyle} align="center">
+						<div>
 						<VK>
 							<Share shareOptions={{
 								url: 'https://vk.com/app7165780_142799641',
@@ -738,6 +753,7 @@ class App extends React.Component {
 								text: 'Поделиться'}}
 							/>
 						</VK>
+						</div>
 					</div>
 				<div style={divStyle}>
 					<br/>
@@ -747,11 +763,6 @@ class App extends React.Component {
 			)
 		}
 
-	screen()
-	{
-
-
-	}
 	renderSwitch(k) {
 		const divStyle = {
 			margin: 3
@@ -1185,6 +1196,8 @@ class App extends React.Component {
 	}
 
 
+
+
 	render() {
 		let {
 			route,
@@ -1200,6 +1213,9 @@ class App extends React.Component {
 			minHeight: "200px",
 			boxSizing: "border-box"
 		}
+
+
+
 		return (
 
 			<Root activeView={activeView}>
@@ -1215,6 +1231,7 @@ class App extends React.Component {
 							setCurrentTaskId={this.setCurrentTaskId}
 
 						/>
+
 
 					</Panel>
 

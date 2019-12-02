@@ -20,6 +20,8 @@
     "router5": "^7.0.2"
   },
   "dependencies": {
+    "@progress/kendo-react-pdf": "^3.9.0",
+    "@react-pdf/renderer": "^1.6.8",
     "@vkontakte/icons": "^1.10.0",
     "@vkontakte/vk-connect": "^1.6.5",
     "@vkontakte/vkui": "^2.31.0",
@@ -41,9 +43,11 @@
     "react": "^16.10.2",
     "react-charts": "^2.0.0-beta.4",
     "react-clear-cache": "^1.0.26",
+    "react-csv": "^1.1.2",
     "react-dom": "^16.10.2",
     "react-json-fetch": "^1.0.0",
     "react-router5": "^7.1.0",
+    "react-to-pdf": "0.0.8",
     "react-transition-group": "^4.3.0",
     "react-vk": "^5.0.2",
     "recharts": "^1.8.5",
