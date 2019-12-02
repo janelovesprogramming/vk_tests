@@ -639,11 +639,7 @@ class App extends React.Component {
 
 					</PanelHeader>
 					<h2 align="center">Ваш психологический профиль</h2>
-					<div style={h2Style} align="center">
-					<Pdf targetRef={ref} filename="big5results.pdf">
-						{({ toPdf }) => <Button onClick={toPdf} >Сохранить результат</Button>}
-					</Pdf>
-					</div>
+
 
 					<VictoryChart polar
 								  name = "capture"
@@ -728,7 +724,7 @@ class App extends React.Component {
 
 						<CompassCenter/>
 					</VictoryChart>
-					<div ref={ref}>
+					<div>
 					<div>
 						{this.renderSwitch(0)}
 						{this.renderSwitch(1)}
