@@ -504,7 +504,7 @@ class App extends React.Component {
 
 		};
 
-		pdfMake.createPdf(documentDefinition).open();
+		pdfMake.createPdf(documentDefinition).download();
 
 	}
 
@@ -724,7 +724,7 @@ class App extends React.Component {
 					</PanelHeader>
 					<h2 align="center">Ваш психологический профиль</h2>
 
-					<div align="center"><Button onClick={(e) => this.exportPDF(e)}>Save to pdf</Button></div>
+					<div align="center"><Button onClick={(e) => this.exportPDF(e)}>Сохранить результат</Button></div>
 					<VictoryChart polar
 								  name = "capture"
 								  animate={{duration: 500, onLoad: {duration: 500}}}
