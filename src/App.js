@@ -13,11 +13,17 @@ import {
 	PanelHeaderBack,
 	Button
 } from '@vkontakte/vkui'
+import PDF, { Text, AddPage, Line, Image, Table, Html } from 'jspdf-react'
 import Pdf from "react-to-pdf";
 import '@vkontakte/vkui/dist/vkui.css'
 import VK, {Share, Post} from 'react-vk';
 
 
+
+import pdfMake from 'pdfmake/build/pdfmake';
+import vfsFonts from 'pdfmake/build/vfs_fonts';
+
+import 'jspdf-autotable';
 
 import Tasks from './components/Tasks'
 import AddTask from './components/AddTask'
@@ -42,6 +48,8 @@ import impuls from '../src/api/145470.jpg';
 import emo from '../src/api/Unknown1.jpg';
 import ob from '../src/api/depositphotos_43962069-stock-photo-suspicious-man.jpg';
 import pr from '../src/api/0ff07ec3519ac00d48af86d150a59bc8.jpg';
+import jsPDF from "jspdf";
+import { Document, Page, PDFDownloadLink  } from 'react-pdf';
 
 const orange = { base: "#8ed1fc", highlight: "#0693e3" };
 
@@ -131,11 +139,19 @@ class App extends React.Component {
 			cur: 0,
 			big5mas: [],
 			flag: false,
+			array1: [],
+			numPages: null,
+			pageNumber: 1,
+			people: [
+				{name: "Keanu Reeves", profession: "Actor"},
+				{name: "Lionel Messi", profession: "Football Player"},
+				{name: "Cristiano Ronaldo", profession: "Football Player"},
+				{name: "Jack Nicklaus", profession: "Golf Player"},
+			],
+			phrase: ""
 
 
 		}
-
-
 
 
 		this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
@@ -388,7 +404,6 @@ class App extends React.Component {
 				</Panel>
 
 
-
 			);
 		} else {
 			return (
@@ -424,6 +439,74 @@ class App extends React.Component {
 		}
 
 	}
+
+	onDocumentLoadSuccess = ({numPages}) => {
+		this.setState({numPages});
+	}
+
+
+
+
+	exportPDF(){
+		const {vfs} = vfsFonts.pdfMake;
+		pdfMake.vfs = vfs;
+
+		const documentDefinition = {
+			pageSize: 'A4',
+			pageOrientation: 'landscape',
+			content: [
+				{
+					text: 'Мой психологический профиль',
+					style: 'header',
+					alignment: 'center'
+				},
+				'\n',
+				{
+					text: 'This is a header, using header style',
+					style: 'header'
+				},
+				'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Confectum ponit legam, perferendis nomine miserum, animi. Moveat nesciunt triari naturam.\n\n',
+				{
+					text: 'Subheader 1 - using subheader style',
+					style: 'subheader'
+				},
+				'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Confectum ponit legam, perferendis nomine miserum, animi. Moveat nesciunt triari naturam posset, eveniunt specie deorsus efficiat sermone instituendarum fuisse veniat, eademque mutat debeo. Delectet plerique protervi diogenem dixerit logikh levius probabo adipiscuntur afficitur, factis magistra inprobitatem aliquo andriam obiecta, religionis, imitarentur studiis quam, clamat intereant vulgo admonitionem operis iudex stabilitas vacillare scriptum nixam, reperiri inveniri maestitiam istius eaque dissentias idcirco gravis, refert suscipiet recte sapiens oportet ipsam terentianus, perpauca sedatio aliena video.',
+				'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Confectum ponit legam, perferendis nomine miserum, animi. Moveat nesciunt triari naturam posset, eveniunt specie deorsus efficiat sermone instituendarum fuisse veniat, eademque mutat debeo. Delectet plerique protervi diogenem dixerit logikh levius probabo adipiscuntur afficitur, factis magistra inprobitatem aliquo andriam obiecta, religionis, imitarentur studiis quam, clamat intereant vulgo admonitionem operis iudex stabilitas vacillare scriptum nixam, reperiri inveniri maestitiam istius eaque dissentias idcirco gravis, refert suscipiet recte sapiens oportet ipsam terentianus, perpauca sedatio aliena video.',
+				'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Confectum ponit legam, perferendis nomine miserum, animi. Moveat nesciunt triari naturam posset, eveniunt specie deorsus efficiat sermone instituendarum fuisse veniat, eademque mutat debeo. Delectet plerique protervi diogenem dixerit logikh levius probabo adipiscuntur afficitur, factis magistra inprobitatem aliquo andriam obiecta, religionis, imitarentur studiis quam, clamat intereant vulgo admonitionem operis iudex stabilitas vacillare scriptum nixam, reperiri inveniri maestitiam istius eaque dissentias idcirco gravis, refert suscipiet recte sapiens oportet ipsam terentianus, perpauca sedatio aliena video.\n\n',
+				{
+					text: 'Subheader 2 - using subheader style',
+					style: 'subheader'
+				},
+				'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Confectum ponit legam, perferendis nomine miserum, animi. Moveat nesciunt triari naturam posset, eveniunt specie deorsus efficiat sermone instituendarum fuisse veniat, eademque mutat debeo. Delectet plerique protervi diogenem dixerit logikh levius probabo adipiscuntur afficitur, factis magistra inprobitatem aliquo andriam obiecta, religionis, imitarentur studiis quam, clamat intereant vulgo admonitionem operis iudex stabilitas vacillare scriptum nixam, reperiri inveniri maestitiam istius eaque dissentias idcirco gravis, refert suscipiet recte sapiens oportet ipsam terentianus, perpauca sedatio aliena video.',
+				'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Confectum ponit legam, perferendis nomine miserum, animi. Moveat nesciunt triari naturam posset, eveniunt specie deorsus efficiat sermone instituendarum fuisse veniat, eademque mutat debeo. Delectet plerique protervi diogenem dixerit logikh levius probabo adipiscuntur afficitur, factis magistra inprobitatem aliquo andriam obiecta, religionis, imitarentur studiis quam, clamat intereant vulgo admonitionem operis iudex stabilitas vacillare scriptum nixam, reperiri inveniri maestitiam istius eaque dissentias idcirco gravis, refert suscipiet recte sapiens oportet ipsam terentianus, perpauca sedatio aliena video.\n\n',
+				{
+					text: 'It is possible to apply multiple styles, by passing an array. This paragraph uses two styles: quote and small. When multiple styles are provided, they are evaluated in the specified order which is important in case they define the same properties',
+					style: ['quote', 'small']
+				}
+			],
+			styles: {
+				header: {
+					fontSize: 18,
+					bold: true
+				},
+				subheader: {
+					fontSize: 15,
+					bold: true
+				},
+				quote: {
+					italics: true
+				},
+				small: {
+					fontSize: 8
+				}
+			}
+
+		};
+
+		pdfMake.createPdf(documentDefinition).open();
+
+	}
+
 
 	renderResult() {
 		if (this.state.id_user !== '') {
@@ -590,7 +673,7 @@ class App extends React.Component {
 			} = this.props
 
 			const ref = React.createRef();
-
+			const { pageNumber, numPages } = this.state;
 			return (
 				<div>
 
@@ -639,6 +722,10 @@ class App extends React.Component {
 
 					</PanelHeader>
 					<h2 align="center">Ваш психологический профиль</h2>
+					<div align="center">
+					<Button onClick={this.exportPDF()}>Сохранить в PDF</Button>
+
+					</div>
 
 
 					<VictoryChart polar
@@ -750,6 +837,7 @@ class App extends React.Component {
 							/>
 						</VK>
 						</div>
+
 					</div>
 				<div style={divStyle}>
 					<br/>
