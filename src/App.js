@@ -448,6 +448,7 @@ class App extends React.Component {
 
 
 	exportPDF(){
+		/*
 		const {vfs} = vfsFonts.pdfMake;
 		pdfMake.vfs = vfs;
 
@@ -503,7 +504,7 @@ class App extends React.Component {
 
 		};
 
-		pdfMake.createPdf(documentDefinition).open();
+		pdfMake.createPdf(documentDefinition).open();*/
 
 	}
 
@@ -722,11 +723,7 @@ class App extends React.Component {
 
 					</PanelHeader>
 					<h2 align="center">Ваш психологический профиль</h2>
-					<div align="center">
-					<Button onClick={this.exportPDF()}>Сохранить в PDF</Button>
-
-					</div>
-
+					
 
 					<VictoryChart polar
 								  name = "capture"
