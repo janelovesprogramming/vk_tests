@@ -795,7 +795,7 @@ class App extends React.Component {
 
 		if (this.state.currentTaskId === 2) {
 
-			if (this.state.big5mas[k] >= 51) {
+			if (this.state.big5mas[k] >= 20) {
 				switch (k) {
 					case 0:
 						return (
@@ -884,7 +884,7 @@ class App extends React.Component {
 				}
 
 			}
-			else if (this.state.big5mas[k] <= 40)
+			else if (this.state.big5mas[k] <= 18)
 			{
 				switch (k) {
 					case 0:
