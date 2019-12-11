@@ -52,11 +52,11 @@ class Tasks extends React.Component {
                                 </Gallery>
                                     <div>
                                         <Div align="left">{task.text}</Div>
-                                        <div align="center"><Button onClick={()=> {
+                                        <div align="center"><Button size="xl" onClick={()=> {
                                             setCurrentTaskId(task.id)
                                             router.navigate('task', { id : task.id })
                                         }
-                                        }>{task.id===1?"Начать короткий тест":"Начать тест"}</Button></div>
+                                        }><b>{task.id===1?"Начать короткий тест":"Начать тест"}</b></Button></div>
                                     </div>
                                 </div>
 
