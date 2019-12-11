@@ -30,7 +30,7 @@ class Tasks extends React.Component {
                 >
                     Тесты
                 </PanelHeader>
-                <List style={{ paddingTop : (osname === ANDROID) ? 56 : 48 }}>
+                <List>
                     {
                         tasks.map((task, index) => (
                             <Cell
