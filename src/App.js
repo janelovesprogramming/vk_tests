@@ -24,7 +24,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import vfsFonts from 'pdfmake/build/vfs_fonts';
 
 import 'jspdf-autotable';
-
+import * as _ from 'lodash';
 import Tasks from './components/Tasks'
 import AddTask from './components/AddTask'
 import EditTask from './components/EditTask'
@@ -101,16 +101,9 @@ class App extends React.Component {
 		this.state = {
 			tasks: [
 				{
-					id: 1,
-					name: 'Тест по Большой пятерке (10 вопросов)',
-					text: 'Экспресс-тест на 10 вопросов: узнай свой характер за 3 минуты',
-					image_back: people
-
-				},
-				{
 					id: 2,
-					name: 'Тест по Большой пятерке (75 вопросов)',
-					text: 'Точный тест на 75 вопросов: узнай свой характер за 15 минут',
+					name: 'Тест по Большой пятерке (30 вопросов)',
+					text: 'Точный тест на 30 вопросов: узнай свой характер за 15 минут',
 					image_back: peo
 				}
 
@@ -142,14 +135,12 @@ class App extends React.Component {
 			array1: [],
 			numPages: null,
 			pageNumber: 1,
-			people: [
-				{name: "Keanu Reeves", profession: "Actor"},
-				{name: "Lionel Messi", profession: "Football Player"},
-				{name: "Cristiano Ronaldo", profession: "Football Player"},
-				{name: "Jack Nicklaus", profession: "Golf Player"},
-			],
-			phrase: ""
-
+			phrase: "",
+			question_ext:[],
+			question_agr:[],
+			question_con:[],
+			question_ner:[],
+			question_open:[]
 
 		}
 
@@ -203,7 +194,7 @@ class App extends React.Component {
 
 
 	componentDidMount() {
-
+		/*
 		this.state.allquestions = ["Я хорошо справляюсь со стрессом, всегда спокоен и расслаблен",
 			"Я склонен искать в других людях недостатки",
 			"Я склонен быть ленивым ",
@@ -214,85 +205,110 @@ class App extends React.Component {
 			"Я скрытный человек",
 			"Я серьезно выполняю данную мне работу",
 			"Я считаю, что я человек, которому доверяют другие люди"
-		];
-
-		this.state.allquestions_long_test = [
+		];*/
+		this.state.question_ext = [
 			"Мне нравится заниматься физкультурой",
-			"Люди считают меня отзывчивым и доброжелательным человеком",
-			"Я во всем ценю чистоту и порядок",
-			"Меня часто беспокоит мысль, что что-нибудь может случиться",
-			"Все новое вызывает у меня интерес",
 			"Если я ничем не занят, то это меня беспокоит",
-			"Я стараюсь проявлять дружелюбие ко всем людям",
-			"Моя комната всегда аккуратно прибрана",
-			"Иногда я расстраиваюсь из-за пустяков",
-			"Мне нравятся неожиданности",
 			"Я не могу долго оставаться в неподвижности",
-			"Я тактичен по отношения к другим людям",
-			"Я методичен и пунктуален во всем",
-			"Мои чувства легко уязвимы и ранимы",
-			"Мне не интересно, когда ответ ясен заранее",
 			"Я люблю, чтобы другие быстро выполняли мои распоряжения",
-			"Я уступчивый и склонный к компромиссам человек",
-			"Я проявляю настойчивость, решая трудную задачу",
-			"В трудных ситуациях я весь сжимаюсь от напряжения",
-			"У меня очень живое воображение",
 			"Мне часто приходится быть лидером, проявлять инициативу",
-			"Я всегда готов оказать помощь и разделить чужие трудности",
-			"Я очень старательный во всех делах человек",
-			"У меня часто выступает холодный пот и дрожат руки",
-			"Мне нравится мечтать",
 			"Часто случается, что я руковожу, отдаю распоряжения другим людям",
-			"Я предпочитаю сотрудничать с другими, чем соперничать",
-			"Я серьезно и прилежно отношусь к работе",
-			"В необычной обстановке я часто нервничаю",
-			"Иногда я погружаюсь в глубокие размышления",
 			"Мне нравится общаться с незнакомыми людьми",
-			"Большинство людей добры от природы",
-			"Люди часто доверяют мне ответственные дела",
-			"Иногда я чувствую себя одиноко, тоскливо и все валится из рук",
-			"Я хорошо знаю, что такое красота и элегантность",
 			"Мне нравится приобретать новых друзей и знакомых",
-			"Люди, с которыми я общаюсь, обычно мне нравятся",
-			"Я требователен и строг в работе",
-			"Когда я сильно расстроен, у меня тяжело на душе",
-			"Музыка способна так захватить меня, что я теряю чувство времени",
 			"Я люблю находиться в больших и веселых компаниях",
-			"Большинство людей честные, и им можно доверять",
-			"Я обычно работаю добросовестно",
-			"Я легко впадаю в депрессию",
-			"Настоящее произведение искусства вызывает у меня восхищение",
-			"«Болея» на спортивных соревнованиях, я забываю обо всем",
-			"Я стараюсь проявлять чуткость, когда имею дело с людьми",
-			"Я редко делаю необдуманно то, что хочу сделать",
-			"У меня много слабостей и недостатков",
-			"Я хорошо понимаю свое душевное состояние",
 			"Я часто игнорирую сигналы, предупреждающие об опасности",
-			"Радость других я разделяю как собственную",
-			"Я обычно контролирую свои чувства и желания",
-			"Если я терплю неудачу, то обычно обвиняю себя",
-			"Я верю, что чувства делают мою жизнь содержательнее",
 			"Мне нравятся карнавальные шествия и демонстрации",
-			"Я стараюсь поставить себя на место другого человека, чтобы его понять",
-			"В магазине я обычно долго выбираю то, что надумал купить",
-			"Иногда я чувствую себя жалким человеком",
-			"Я легко «вживаюсь» в переживания вымышленного героя",
 			"Я чувствую себя счастливым, когда на меня обращают внимание",
-			"В каждом человеке есть нечто, за что его можно уважать",
-			"Обычно я хорошо думаю, прежде чем действую",
-			"Часто у меня бывают взлеты и падения настроения",
-			"Иногда я чувствую себя фокусником, подшучивающим над людьми",
 			"Я привлекателен для лиц противоположного пола",
+			"Мне нравится выглядеть вызывающе"
+
+		];
+		this.state.question_agr = [
+			"Люди считают меня отзывчивым и доброжелательным человеком",
+			"Я стараюсь проявлять дружелюбие ко всем людям",
+			"Я тактичен по отношения к другим людям",
+			"Я уступчивый и склонный к компромиссам человек",
+			"Я всегда готов оказать помощь и разделить чужие трудности",
+			"Я предпочитаю сотрудничать с другими, чем соперничать",
+			"Большинство людей добры от природы",
+			"Люди, с которыми я общаюсь, обычно мне нравятся",
+			"Большинство людей честные, и им можно доверять",
+			"Я стараюсь проявлять чуткость, когда имею дело с людьми",
+			"Радость других я разделяю как собственную",
+			"Я стараюсь поставить себя на место другого человека, чтобы его понять",
+			"В каждом человеке есть нечто, за что его можно уважать",
 			"Я всегда стараюсь быть добрым и внимательным с каждым человеком",
+			"Некоторые говорят, что я снисходителен к окружающим"
+
+		];
+		this.state.question_con = [
+			"Я во всем ценю чистоту и порядок",
+			"Моя комната всегда аккуратно прибрана",
+			"Я тактичен по отношения к другим людям",
+			"Я проявляю настойчивость, решая трудную задачу",
+			"Я очень старательный во всех делах человек",
+			"Я серьезно и прилежно отношусь к работе",
+			"Люди часто доверяют мне ответственные дела",
+			"Я требователен и строг в работе",
+			"Я обычно работаю добросовестно",
+			"Я редко делаю необдуманно то, что хочу сделать",
+			"Я обычно контролирую свои чувства и желания",
+			"В магазине я обычно долго выбираю то, что надумал купить",
+			"Обычно я хорошо думаю, прежде чем действую",
 			"Перед путешествием я намечаю точный план",
+			"Я точно и методично выполняю свою работу"
+
+		];
+		this.state.question_ner = [
+			"Меня часто беспокоит мысль, что что-нибудь может случиться",
+			"Иногда я расстраиваюсь из-за пустяков",
+			"Мои чувства легко уязвимы и ранимы",
+			"В трудных ситуациях я весь сжимаюсь от напряжения",
+			"У меня часто выступает холодный пот и дрожат руки",
+			"В необычной обстановке я часто нервничаю",
+			"Иногда я чувствую себя одиноко, тоскливо и все валится из рук",
+			"Когда я сильно расстроен, у меня тяжело на душе",
+			"Я легко впадаю в депрессию",
+			"У меня много слабостей и недостатков",
+			"Если я терплю неудачу, то обычно обвиняю себя",
+			"Иногда я чувствую себя жалким человеком",
+			"Часто у меня бывают взлеты и падения настроения",
 			"Мое настроение легко меняется на противоположное",
-			"Я думаю, что жизнь – это азартная игра",
-			"Мне нравится выглядеть вызывающе",
-			"Некоторые говорят, что я снисходителен к окружающим",
-			"Я точно и методично выполняю свою работу",
 			"Иногда я бываю настолько взволнован, что даже плачу",
+		];
+		this.state.question_open = [
+			"Все новое вызывает у меня интерес",
+			"Мне нравятся неожиданности",
+			"Мне не интересно, когда ответ ясен заранее",
+			"У меня очень живое воображение",
+			"Мне нравится мечтать",
+			"Иногда я погружаюсь в глубокие размышления",
+			"Я хорошо знаю, что такое красота и элегантность",
+			"Музыка способна так захватить меня, что я теряю чувство времени",
+			"Настоящее произведение искусства вызывает у меня восхищение",
+			"Я хорошо понимаю свое душевное состояние",
+			"Я верю, что чувства делают мою жизнь содержательнее",
+			"Я легко «вживаюсь» в переживания вымышленного героя",
+			"Иногда я чувствую себя фокусником, подшучивающим над людьми",
+			"Я думаю, что жизнь – это азартная игра",
 			"Иногда я чувствую, что могу открыть в себе нечто новое"
-		]
+
+		];
+		var array1, array2, array3, array4, array5;
+		array1 = _.shuffle(_.range(0,14)).slice(0,6);
+		array2 = _.shuffle(_.range(0,14)).slice(0,6);
+		array3 = _.shuffle(_.range(0,14)).slice(0,6);
+		array4 = _.shuffle(_.range(0,14)).slice(0,6);
+		array5 = _.shuffle(_.range(0,14)).slice(0,6);
+		for (let j = 0; j < array1.length; j++) {
+
+			this.state.allquestions_long_test.push(this.state.question_ext[array1[j]]);
+			this.state.allquestions_long_test.push(this.state.question_agr[array2[j]]);
+			this.state.allquestions_long_test.push(this.state.question_con[array3[j]]);
+			this.state.allquestions_long_test.push(this.state.question_ner[array4[j]]);
+			this.state.allquestions_long_test.push(this.state.question_open[array5[j]]);
+		}
+
 		if (this.state.currentTaskId === 1) {
 			this.setState({
 				question: this.state.allquestions[0],
@@ -316,15 +332,15 @@ class App extends React.Component {
 		const maxAnswerCount = Math.max.apply(null, answersCountValues);
 
 		for (let i = 0; i < this.state.r.length; i++) {
-			if (i === 0 || i === 5 || i === 10 || i === 15 || i === 20 || i === 25 || i === 30 || i === 35 || i === 40 || i === 45 || i === 50 || i === 55 || i === 60 || i === 65 || i === 70) {
+			if (i === 0 || i === 5 || i === 10 || i === 15 || i === 20 || i === 25) {
 				this.state.ext += Number(this.state.r[i]);
-			} else if (i === 1 || i === 6 || i === 11 || i === 16 || i === 21 || i === 26 || i === 31 || i === 36 || i === 41 || i === 46 || i === 51 || i === 56 || i === 61 || i === 66 || i === 71) {
+			} else if (i === 1 || i === 6 || i === 11 || i === 16 || i === 21 || i === 26) {
 				this.state.agr += Number(this.state.r[i]);
-			} else if (i === 2 || i === 7 || i === 12 || i === 17 || i === 22 || i === 27 || i === 32 || i === 37 || i === 42 || i === 47 || i === 52 || i === 57 || i === 62 || i === 67 || i === 72) {
+			} else if (i === 2 || i === 7 || i === 12 || i === 17 || i === 22 || i === 27) {
 				this.state.con += Number(this.state.r[i]);
-			} else if (i === 3 || i === 8 || i === 13 || i === 18 || i === 23 || i === 28 || i === 33 || i === 38 || i === 43 || i === 48 || i === 53 || i === 58 || i === 63 || i === 68 || i === 73) {
+			} else if (i === 3 || i === 8 || i === 13 || i === 18 || i === 23 || i === 28) {
 				this.state.ner += Number(this.state.r[i]);
-			} else if (i === 4 || i === 9 || i === 14 || i === 19 || i === 24 || i === 29 || i === 34 || i === 39 || i === 44 || i === 49 || i === 54 || i === 59 || i === 64 || i === 69 || i === 74) {
+			} else if (i === 4 || i === 9 || i === 14 || i === 19 || i === 24 || i === 29) {
 				this.state.open += Number(this.state.r[i]);
 			}
 
@@ -448,7 +464,7 @@ class App extends React.Component {
 
 
 	exportPDF(){
-
+		/*
 		const {vfs} = vfsFonts.pdfMake;
 		pdfMake.vfs = vfs;
 
@@ -504,7 +520,10 @@ class App extends React.Component {
 
 		};
 
+		 this.downloadPdf(this.pdfObj);
 		pdfMake.createPdf(documentDefinition).download();
+		<div align="center"><Button onClick={(e) => this.exportPDF(e)}>Сохранить результат</Button></div>
+		*/
 
 	}
 
@@ -553,83 +572,14 @@ class App extends React.Component {
 					q10: this.state.r[9],
 				});
 			} else {
-					db.collection('longtest').add({
-					id_user: this.state.id_user,
-					q1: this.state.r[0],
-					q2: this.state.r[1],
-					q3: this.state.r[2],
-					q4: this.state.r[3],
-					q5: this.state.r[4],
-					q6: this.state.r[5],
-					q7: this.state.r[6],
-					q8: this.state.r[7],
-					q9: this.state.r[8],
-					q10: this.state.r[9],
-					q11: this.state.r[10],
-					q12: this.state.r[11],
-					q13: this.state.r[12],
-					q14: this.state.r[13],
-					q15: this.state.r[14],
-					q16: this.state.r[15],
-					q17: this.state.r[16],
-					q18: this.state.r[17],
-					q19: this.state.r[18],
-					q20: this.state.r[19],
-					q21: this.state.r[20],
-					q22: this.state.r[21],
-					q23: this.state.r[22],
-					q24: this.state.r[23],
-					q25: this.state.r[24],
-					q26: this.state.r[25],
-					q27: this.state.r[26],
-					q28: this.state.r[27],
-					q29: this.state.r[28],
-					q30: this.state.r[29],
-					q31: this.state.r[30],
-					q32: this.state.r[31],
-					q33: this.state.r[32],
-					q34: this.state.r[33],
-					q35: this.state.r[34],
-					q36: this.state.r[35],
-					q37: this.state.r[36],
-					q38: this.state.r[37],
-					q39: this.state.r[38],
-					q40: this.state.r[39],
-					q41: this.state.r[40],
-					q42: this.state.r[41],
-					q43: this.state.r[42],
-					q44: this.state.r[43],
-					q45: this.state.r[44],
-					q46: this.state.r[45],
-					q47: this.state.r[46],
-					q48: this.state.r[47],
-					q49: this.state.r[48],
-					q50: this.state.r[49],
-					q51: this.state.r[50],
-					q52: this.state.r[51],
-					q53: this.state.r[52],
-					q54: this.state.r[53],
-					q55: this.state.r[54],
-					q56: this.state.r[55],
-					q57: this.state.r[56],
-					q58: this.state.r[57],
-					q59: this.state.r[58],
-					q60: this.state.r[59],
-					q61: this.state.r[60],
-					q62: this.state.r[61],
-					q63: this.state.r[62],
-					q64: this.state.r[63],
-					q65: this.state.r[64],
-					q66: this.state.r[65],
-					q67: this.state.r[66],
-					q68: this.state.r[67],
-					q69: this.state.r[68],
-					q70: this.state.r[69],
-					q71: this.state.r[70],
-					q72: this.state.r[71],
-					q73: this.state.r[72],
-					q74: this.state.r[73],
-					q75: this.state.r[74],
+					db.collection('30test').add({
+					id: this.state.id_user,
+					ext:  Math.round((this.state.ext * 100) / 30, 2),
+					agr: Math.round((this.state.agr * 100) / 30, 2),
+					con: Math.round((this.state.con* 100) / 30, 2),
+					ner: Math.round((this.state.ner * 100) / 30, 2),
+					open:Math.round((this.state.open * 100) / 30, 2),
+
 				});
 			}
 		}
@@ -683,16 +633,9 @@ class App extends React.Component {
 						left={<PanelHeaderBack onClick={() => router.navigate('tasks') && this.setState({
 							tasks: [
 								{
-									id: 1,
-									name: 'Тест по Большой пятерке (10 вопросов)',
-									text: 'Большая пятерка – психологическая модель, описывающая структуру личности человека посредством пяти черт:  «нейротизм», «экстраверсия», «открытость опыту», «доброжелательность», «добросовестность».',
-									image_back: people
-
-								},
-								{
 									id: 2,
-									name: 'Тест по Большой пятерке (75 вопросов)',
-									text: 'Большая пятрека – психологическая модель, описывающая структуру личности человека посредством пяти черт: «нейротизм», «экстраверсия», «открытость опыту», «доброжелательность», «добросовестность».',
+									name: 'Тест по Большой пятерке (30 вопросов)',
+									text: 'Точный тест на 30 вопросов: узнай свой характер за 15 минут,',
 									image_back: peo
 								}
 
@@ -724,7 +667,7 @@ class App extends React.Component {
 					</PanelHeader>
 					<h2 align="center">Ваш психологический профиль</h2>
 
-					<div align="center"><Button onClick={(e) => this.exportPDF(e)}>Сохранить результат</Button></div>
+
 					<VictoryChart polar
 								  name = "capture"
 								  animate={{duration: 500, onLoad: {duration: 500}}}
@@ -770,27 +713,27 @@ class App extends React.Component {
 							data={[
 								{
 									x: "Экстраверсия",
-									y: this.state.currentTaskId === 1 ? Math.round((this.state.ext * 100) / 10, 2) : Math.round((this.state.ext * 100) / 75, 2),
+									y: this.state.currentTaskId === 1 ? Math.round((this.state.ext * 100) / 10, 2) : Math.round((this.state.ext * 100) / 30, 2),
 									fill: "#2196f3"
 								},
 								{
 									x: "Доброжелательность",
-									y: this.state.currentTaskId === 1 ? Math.round((this.state.agr * 100) / 10, 2) : Math.round((this.state.agr * 100) / 75, 2),
+									y: this.state.currentTaskId === 1 ? Math.round((this.state.agr * 100) / 10, 2) : Math.round((this.state.agr * 100) / 30, 2),
 									fill: "#03a9f4"
 								},
 								{
 									x: "Добросовестность",
-									y: this.state.currentTaskId === 1 ? Math.round((this.state.con * 100) / 10, 2) : Math.round((this.state.con * 100) / 75, 2),
+									y: this.state.currentTaskId === 1 ? Math.round((this.state.con * 100) / 10, 2) : Math.round((this.state.con * 100) / 30, 2),
 									fill: "#00bcd4"
 								},
 								{
 									x: "Нейротизм",
-									y: this.state.currentTaskId === 1 ? Math.round((this.state.ner * 100) / 10, 2) : Math.round((this.state.ner * 100) / 75, 2),
+									y: this.state.currentTaskId === 1 ? Math.round((this.state.ner * 100) / 10, 2) : Math.round((this.state.ner * 100) / 30, 2),
 									fill: "#009688"
 								},
 								{
 									x: "Открытость опыту",
-									y: this.state.currentTaskId === 1 ? Math.round((this.state.open * 100) / 10, 2) : Math.round((this.state.open * 100) / 75, 2),
+									y: this.state.currentTaskId === 1 ? Math.round((this.state.open * 100) / 10, 2) : Math.round((this.state.open * 100) / 30, 2),
 									fill: "#4caf50"
 								}
 							]}
@@ -827,7 +770,6 @@ class App extends React.Component {
 							<Share shareOptions={{
 								url: 'https://vk.com/app7165780_142799641',
 								title: 'Узнай оценку своей личности по тесту BigFive',
-								image: 'http://mysite.com/mypic.jpg',
 								no_vk_links: 1,
 							}} buttonOptions={{type: 'round_nocount',
 								text: 'Поделиться'}}
@@ -858,7 +800,7 @@ class App extends React.Component {
 					case 0:
 						return (
 							<div>
-								<h2>Экстраверсия {Math.round((this.state.ext*100)/75,2)}%</h2>
+								<h2>Экстраверсия {Math.round((this.state.ext*100)/30,2)}%</h2>
 								<p align="center">
 									<img src={extr} width={400} height={300}/>
 								</p>
@@ -875,7 +817,7 @@ class App extends React.Component {
 
 					case 1:
 						return (
-							<div><h2>Привязанность {Math.round((this.state.agr*100)/75,2)}%</h2>
+							<div><h2>Привязанность {Math.round((this.state.agr*100)/30,2)}%</h2>
 								<p align="center">
 									<img src={agrt} width={400} height={300}/>
 								</p>
@@ -892,7 +834,7 @@ class App extends React.Component {
 					case 2:
 						return (
 							<div>
-								<h2>Самоконтроль {Math.round((this.state.con*100)/75,2)}%</h2>
+								<h2>Самоконтроль {Math.round((this.state.con*100)/30,2)}%</h2>
 								<p align="center">
 									<img src={sam} width={400} height={300}/>
 								</p>
@@ -909,7 +851,7 @@ class App extends React.Component {
 					case 3:
 						return (
 							<div>
-								<h2>Эмоциональная неустойчивость {Math.round((this.state.ner*100)/75,2)}%</h2>
+								<h2>Эмоциональная неустойчивость {Math.round((this.state.ner*100)/30,2)}%</h2>
 								<p align="center">
 									<img src={notemo} width={400} height={300}/>
 								</p>
@@ -925,7 +867,7 @@ class App extends React.Component {
 					case 4:
 						return (
 							<div>
-								<h2>Экспрессивность {Math.round((this.state.open*100)/75,2)}%</h2>
+								<h2>Экспрессивность {Math.round((this.state.open*100)/30,2)}%</h2>
 								<p align="center">
 									<img src={exp} width={400} height={300}/>
 								</p>
@@ -948,7 +890,7 @@ class App extends React.Component {
 					case 0:
 						return (
 							<div>
-								<h2>Интроверсия {Math.round((this.state.ext*100)/75,2)}%</h2>
+								<h2>Интроверсия {Math.round((this.state.ext*100)/30,2)}%</h2>
 								<p align="center">
 									<img src={entr} width={400} height={300}/>
 								</p>
@@ -964,7 +906,7 @@ class App extends React.Component {
 
 					case 1:
 						return (
-							<div><h2>Обособленность {Math.round((this.state.agr*100)/75,2)}%</h2>
+							<div><h2>Обособленность {Math.round((this.state.agr*100)/30,2)}%</h2>
 								<p align="center">
 									<img src={ob} width={400} height={300}/>
 								</p>
@@ -979,7 +921,7 @@ class App extends React.Component {
 					case 2:
 						return (
 							<div>
-								<h2>Импульсивность {Math.round((this.state.con*100)/75,2)}%</h2>
+								<h2>Импульсивность {Math.round((this.state.con*100)/30,2)}%</h2>
 								<p align="center">
 									<img src={impuls} width={400} height={300}/>
 								</p>
@@ -995,7 +937,7 @@ class App extends React.Component {
 					case 3:
 						return (
 							<div>
-								<h2>Эмоциональная устойчивость {Math.round((this.state.ner*100)/75,2)}%</h2>
+								<h2>Эмоциональная устойчивость {Math.round((this.state.ner*100)/30,2)}%</h2>
 								<p align="center">
 									<img src={emo} width={400} height={300}/>
 								</p>
@@ -1010,7 +952,7 @@ class App extends React.Component {
 					case 4:
 						return (
 							<div>
-								<h2>Практичность {Math.round((this.state.open*100)/75,2)}%</h2>
+								<h2>Практичность {Math.round((this.state.open*100)/30,2)}%</h2>
 								<p align="center">
 									<img src={pr} width={400} height={300}/>
 								</p>
