@@ -51,7 +51,7 @@ class Tasks extends React.Component {
 
                                 </Gallery>
                                     <div>
-                                        <Div>{task.text}</Div>
+                                        <Div align="left">{task.text}</Div>
                                         <div align="center"><Button onClick={()=> {
                                             setCurrentTaskId(task.id)
                                             router.navigate('task', { id : task.id })
