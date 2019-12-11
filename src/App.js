@@ -1246,6 +1246,9 @@ class App extends React.Component {
 			<Root activeView={activeView}>
 				<View activePanel={activePanel} id='tasksView'>
 					<Panel id='tasks'>
+						<FixedLayout vertical='top'>
+							<Search value={this.state.search} onChange={this.onChangeSearch}/>
+						</FixedLayout>
 						<Tasks
 							router={router}
 							tasks={this.tasks}
