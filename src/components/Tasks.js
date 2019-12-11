@@ -45,7 +45,7 @@ class Tasks extends React.Component {
                                 <Header><b>{task.name}</b></Header>
                                 <Gallery
                                     slideWidth="100%"
-                                    style={{ height: 170 }}
+                                    style={{ height: 145 }}
                                 >
                                     <img src={task.image_back}/>
 
